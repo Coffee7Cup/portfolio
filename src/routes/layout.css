@@ -1,3 +1,22 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@theme {
+	--color-bg-main: var(--bg-main);
+	--color-text-main: var(--text-main);
+	--color-accent: var(--accent);
+	--font-main: 'Inter', system-ui, sans-serif; /*sans*/
+}
+
+:root {
+	--bg-main: #ffffff;
+	--text-main: #09090b;
+	--accent: #ff0000;
+}
+
+.dark {
+	--bg-main: #141414;
+	--text-main: #f4f4f5;
+	--accent: #ff0000;
+}
