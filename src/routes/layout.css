@@ -5,18 +5,22 @@
 @theme {
 	--color-bg-main: var(--bg-main);
 	--color-text-main: var(--text-main);
+	--color-text-sub: var(--text-sub);
 	--color-accent: var(--accent);
 	--font-main: 'Inter', system-ui, sans-serif; /*sans*/
+	--font-sub: 'Inter', system-ui, sans-serif;
 }
 
 :root {
-	--bg-main: #ffffff;
-	--text-main: #09090b;
-	--accent: #ff0000;
+	--bg-main: #fffdfa;
+	--text-main: #291a07;
+	--text-sub: #786b5c;
+	--accent: #ea580c; /* Deep Orange */
 }
 
 .dark {
-	--bg-main: #141414;
-	--text-main: #f4f4f5;
-	--accent: #ff0000;
+	--bg-main: #0f0b06;
+	--text-main: #fbf7f2;
+	--text-sub: #a89e93;
+	--accent: #f97316; /* Safety Orange */
 }
