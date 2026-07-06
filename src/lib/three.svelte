@@ -21,6 +21,7 @@
 			antialias: true,
 			alpha: true
 		});
+		renderer.setClearColor(0x000000, 0);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -55,33 +56,38 @@
 					actions.push(action);
 				}
 
-				const syncAnimationTime = () => {
-					actions.forEach((action) => {
-						action.time = animationProxy.time;
-					});
-				};
+				const tl = gsap.timeline();
 
-				gsap.to(animationProxy, {
-					time: 1,
-					duration: 1,
-					ease: 'power1.out',
-					onUpdate: syncAnimationTime,
-					onComplete: () => {
-						const tl = gsap.timeline({
-							scrollTrigger: {
-								trigger: containerElement,
-								start: 'top top',
-								end: 'bottom bottom',
-								scrub: 1
-							}
-						});
-						tl.fromTo(
-							animationProxy,
-							{ time: 1 },
-							{ time: 3.5, ease: 'none', onUpdate: syncAnimationTime }
-						);
+				tl.fromTo(
+					animationProxy,
+					{ time: 0 },
+					{
+						time: 1,
+						duration: 0.7,
+						ease: 'power1.out',
+						onUpdate: () => {
+							actions.forEach((action) => (action.time = animationProxy.time));
+						}
 					}
-				});
+				);
+
+				tl.fromTo(
+					animationProxy,
+					{ time: 1 },
+					{
+						time: 3.5,
+						ease: 'none',
+						onUpdate: () => {
+							actions.forEach((action) => (action.time = animationProxy.time));
+						},
+						scrollTrigger: {
+							trigger: containerElement,
+							start: 'top top',
+							end: 'bottom bottom',
+							scrub: 1
+						}
+					}
+				);
 			}
 			animate();
 		});
@@ -120,4 +126,4 @@
 		<canvas class="h-full w-full" bind:this={canvasElement}></canvas>
 	</div>
 </div>
-/div>
+hello

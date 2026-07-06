@@ -7,7 +7,7 @@
 	--color-text-main: var(--text-main);
 	--color-text-sub: var(--text-sub);
 	--color-accent: var(--accent);
-	--font-main: 'Inter', system-ui, sans-serif; /*sans*/
+	--font-main: 'Inter', system-ui, sans-serif;
 	--font-sub: 'Inter', system-ui, sans-serif;
 }
 
@@ -15,12 +15,14 @@
 	--bg-main: #fffdfa;
 	--text-main: #291a07;
 	--text-sub: #786b5c;
-	--accent: #ea580c; /* Deep Orange */
+	--accent: #ea580c;
 }
 
-.dark {
+/* Change this to target the .dark class specifically */
+:root .dark,
+:root[class~='dark'] {
 	--bg-main: #0f0b06;
 	--text-main: #fbf7f2;
 	--text-sub: #a89e93;
-	--accent: #f97316; /* Safety Orange */
+	--accent: #f97316;
 }
