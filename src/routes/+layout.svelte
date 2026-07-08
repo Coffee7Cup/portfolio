@@ -10,7 +10,7 @@
 <nav></nav>
 
 <button
-	class="fixed top-5 left-4 z-1000 cursor-pointer rounded border bg-white p-2"
+	class="absolute top-5 left-4 z-1000 cursor-pointer rounded border bg-white p-2"
 	onclick={() => document.documentElement.classList.toggle('dark')}
 >
 	toggle

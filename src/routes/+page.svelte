@@ -5,13 +5,10 @@
 	let threeDimContainer = $state();
 </script>
 
-<div class=" relative min-h-screen w-screen overflow-x-hidden bg-bg-main">
-	<div
-		bind:this={threeDimContainer}
-		id="3d-container"
-		class=" absolute top-0 left-0 z-2 bg-transparent"
-	>
+<div class="relative m-0 min-h-screen w-screen bg-bg-main p-0">
+	<div bind:this={threeDimContainer} id="3d-container" class="absolute inset-0 z-20 bg-transparent">
 		<Tee />
 	</div>
+
 	<Home />
 </div>

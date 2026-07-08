@@ -1,10 +1,70 @@
-<div class="">
-	<div id="decoration z-2">
-		<div>
-			<div
-				class="h-scren absolute bottom-0 left-0 h-100 w-100 -translate-x-20 translate-y-20 rounded-full bg-accent"
-			></div>
-			<div></div>
-		</div>
+<div class="pointer-events-none absolute inset-0 z-0">
+	<div class="absolute bottom-0 left-0 -translate-x-60 translate-y-60">
+		{@render radial_gradient_circle()}
+	</div>
+	<div class="absolute top-0 right-0 translate-x-70 -translate-y-70">
+		{@render radial_gradient_circle()}
 	</div>
 </div>
+
+<div class="pointer-events-none absolute inset-0 z-10 p-7">
+	<div class="flex h-screen flex-col leading-none">
+		<div class="h-[50%]"></div>
+		<div class="font-stroke-display text-[10rem] font-extrabold text-text-main">Hey,</div>
+		<div class="font-stroke-display text-[10rem] font-extrabold text-text-main">I'm Yashwanth</div>
+	</div>
+
+	<div
+		class="absolute bottom-0 left-0 flex h-190 w-190 -translate-x-60 translate-y-60 items-center justify-center"
+	>
+		<div class="h-100 w-100 rounded-full bg-accent"></div>
+	</div>
+	<div
+		class="absolute top-0 right-0 flex h-190 w-190 translate-x-70 -translate-y-70 items-center justify-center"
+	>
+		<div class="h-100 w-100 rounded-full bg-accent"></div>
+	</div>
+</div>
+
+<div class="pointer-events-none absolute inset-0 z-30 p-7">
+	<div class="flex h-screen flex-col leading-none">
+		<div class="h-[50%]"></div>
+		<div class="text-stroke font-stroke-display text-[10rem] font-extrabold">Hey,</div>
+		<div class="text-stroke font-stroke-display text-[10rem] font-extrabold">I'm Yashwanth</div>
+	</div>
+</div>
+
+<svg class="absolute h-0 w-0" aria-hidden="true">
+	<filter id="grn">
+		<feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="1" result="noise" />
+		<feColorMatrix
+			type="matrix"
+			values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0"
+			result="soft-noise"
+		/>
+		<feComposite operator="in" in="soft-noise" in2="SourceGraphic" result="clipped-noise" />
+		<feBlend mode="multiply" in="SourceGraphic" in2="clipped-noise" />
+	</filter>
+</svg>
+
+{#snippet radial_gradient_circle()}
+	<div class="relative flex h-190 w-190 items-center justify-center">
+		<div id="outer" class="absolute inset-0"></div>
+	</div>
+{/snippet}
+
+<style>
+	#outer {
+		border-radius: 50%;
+		background: radial-gradient(circle, var(--accent, #f97316) 0%, rgba(249, 115, 22, 0) 60%);
+		filter: url('#grn');
+		overflow: hidden;
+	}
+
+	:global(.text-stroke) {
+		color: transparent;
+		-webkit-text-stroke: 4px var(--text-main, #ffffff);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+</style>

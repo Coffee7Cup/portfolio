@@ -9,6 +9,8 @@
 	--color-accent: var(--accent);
 	--font-main: 'Inter', system-ui, sans-serif;
 	--font-sub: 'Inter', system-ui, sans-serif;
+	--font-stroke-display: 'Syne', 'Outfit', sans-serif;
+	--font-stroke-clean: 'Plus Jakarta Sans', 'Unbounded', sans-serif;
 }
 
 :root {
