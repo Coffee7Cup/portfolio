@@ -1,8 +1,8 @@
-<div class="pointer-events-none absolute inset-0 z-0">
-	<div class="absolute bottom-0 left-0 -translate-x-60 translate-y-60">
+<div class="pointer-events-none relative inset-0 z-0 h-screen w-screen">
+	<div class="absolute bottom-0 left-0 -translate-x-100 translate-y-105">
 		{@render radial_gradient_circle()}
 	</div>
-	<div class="absolute top-0 right-0 translate-x-70 -translate-y-70">
+	<div class="absolute top-0 right-0 translate-x-120 -translate-y-120">
 		{@render radial_gradient_circle()}
 	</div>
 </div>
@@ -36,19 +36,24 @@
 
 <svg class="absolute h-0 w-0" aria-hidden="true">
 	<filter id="grn">
-		<feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="1" result="noise" />
+		<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" result="noise" />
+
+		<feComposite operator="in" in="noise" in2="SourceGraphic" result="masked-noise" />
+
 		<feColorMatrix
 			type="matrix"
-			values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.2 0"
-			result="soft-noise"
+			values="1 0 0 0 0  
+			        0 1 0 0 0  
+			        0 0 1 0 0  
+			        0 0 0 19 -9"
+			result="binary-grain"
 		/>
-		<feComposite operator="in" in="soft-noise" in2="SourceGraphic" result="clipped-noise" />
-		<feBlend mode="multiply" in="SourceGraphic" in2="clipped-noise" />
+
+		<feComposite operator="in" in="SourceGraphic" in2="binary-grain" />
 	</filter>
 </svg>
-
 {#snippet radial_gradient_circle()}
-	<div class="relative flex h-190 w-190 items-center justify-center">
+	<div class="relative flex h-300 w-300 items-center justify-center">
 		<div id="outer" class="absolute inset-0"></div>
 	</div>
 {/snippet}
@@ -56,7 +61,7 @@
 <style>
 	#outer {
 		border-radius: 50%;
-		background: radial-gradient(circle, var(--accent, #f97316) 0%, rgba(249, 115, 22, 0) 60%);
+		background: radial-gradient(circle, var(--accent, #f97316) 0%, rgba(249, 115, 22, 0) 100%);
 		filter: url('#grn');
 		overflow: hidden;
 	}

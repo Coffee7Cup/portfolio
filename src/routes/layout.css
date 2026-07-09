@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;700;800&family=Syne:wght@700;800&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
@@ -17,7 +18,7 @@
 	--bg-main: #fffdfa;
 	--text-main: #291a07;
 	--text-sub: #786b5c;
-	--accent: #ea580c;
+	--accent: #ff0000;
 }
 
 /* Change this to target the .dark class specifically */
@@ -26,5 +27,46 @@
 	--bg-main: #0f0b06;
 	--text-main: #fbf7f2;
 	--text-sub: #a89e93;
-	--accent: #f97316;
+	--accent: #ff0000;
+}
+
+/* Global improvements */
+html {
+	scroll-behavior: smooth;
+	background-color: var(--bg-main);
+	color: var(--text-main);
+	overflow-x: hidden;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: var(--font-main);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection colors */
+::selection {
+	background-color: var(--accent);
+	color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(255, 0, 0, 0.2);
+	border-radius: 5px;
+	border: 2px solid var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--accent);
 }

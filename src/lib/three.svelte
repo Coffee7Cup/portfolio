@@ -22,7 +22,8 @@
 			alpha: true
 		});
 		renderer.setClearColor(0x000000, 0);
-		renderer.setSize(window.innerWidth, window.innerHeight);
+		const initialWidth = containerElement?.clientWidth || window.innerWidth;
+		renderer.setSize(initialWidth, window.innerHeight);
 		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 		let camera;
@@ -36,12 +37,13 @@
 			const model = gltf.scene;
 			scene.add(model);
 
+			const width = containerElement?.clientWidth || window.innerWidth;
 			if (gltf.cameras && gltf.cameras.length > 0) {
 				camera = gltf.cameras[0];
-				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.aspect = width / window.innerHeight;
 				camera.updateProjectionMatrix();
 			} else {
-				camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+				camera = new THREE.PerspectiveCamera(45, width / window.innerHeight, 0.1, 100);
 				camera.position.set(0, 5, 10);
 				camera.lookAt(0, 0, 0);
 			}
@@ -106,9 +108,10 @@
 
 		const handleResize = () => {
 			if (!camera) return;
-			camera.aspect = window.innerWidth / window.innerHeight;
+			const width = containerElement?.clientWidth || window.innerWidth;
+			camera.aspect = width / window.innerHeight;
 			camera.updateProjectionMatrix();
-			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.setSize(width, window.innerHeight);
 		};
 
 		window.addEventListener('resize', handleResize);
