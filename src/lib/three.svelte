@@ -77,7 +77,7 @@
 					animationProxy,
 					{ time: 1 },
 					{
-						time: 3.5,
+						time: 3.2,
 						ease: 'none',
 						onUpdate: () => {
 							actions.forEach((action) => (action.time = animationProxy.time));
@@ -124,7 +124,7 @@
 	});
 </script>
 
-<div bind:this={containerElement} class="scroll-container relative h-[300vh]">
+<div bind:this={containerElement} id="3d" class="scroll-container relative h-[300vh]">
 	<div class="canvas-wrapper fixed top-0 left-0 h-screen w-full">
 		<canvas class="h-full w-full" bind:this={canvasElement}></canvas>
 	</div>

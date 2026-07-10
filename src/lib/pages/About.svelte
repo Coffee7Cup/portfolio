@@ -65,54 +65,39 @@
 <section
 	bind:this={sectionEl}
 	id="about"
-	class="relative flex min-h-screen w-full items-center overflow-hidden bg-bg-main"
+	class="relative flex min-h-screen w-screen flex-row items-center bg-bg-main"
 >
-	<!-- Rotated ABOUT title -->
 	<div
-		class="about-title-col pointer-events-none absolute left-0 z-10 flex h-full items-center md:relative md:w-48 lg:w-56"
+		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
+		       justify-center px-4"
 	>
-		<div class="about-rotate-title whitespace-nowrap">
-			<GrainyText text="ABOUT" size="8xl md:text-9xl lg:text-[11rem]" id="about" />
+		<div class="-rotate-90 whitespace-nowrap">
+			<GrainyText text="ABOUT" size="8xl text-[7rem] font-stroke-display" id="about" />
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="relative z-20 flex flex-1 flex-col justify-center px-8 py-24 md:px-16 lg:px-24">
-		<p class="about-bio max-w-2xl font-main text-base font-medium leading-relaxed text-text-main md:text-lg lg:text-xl">
-			I am a developer focused on building clean, efficient, and user-centric digital experiences.
-			I specialize in systems programming, custom networking architectures, and crafting responsive
-			frontend interfaces.
-		</p>
-
-		<h3
-			class="about-subheading mt-10 mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl lg:text-3xl"
-		>
-			What I'm Good at.
-		</h3>
-
-		<div class="flex max-w-2xl flex-wrap gap-3">
-			{#each skills as skill}
-				<div class="about-pill">
-					<SkillPill label={skill} />
+	<div class="relative z-20 h-screen w-screen">
+		<div class="mt-52 flex-1 flex-col pl-32">
+			<div class="w-full max-w-2xl">
+				<p class="about-bio font-main text-xl leading-relaxed font-medium text-text-main">
+					I am a developer focused on building clean, efficient, and user-centric digital
+					experiences. I specialize in systems programming, custom networking architectures, and
+					crafting responsive frontend interfaces.
+				</p>
+				<h3
+					class="about-subheading mt-10 mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl lg:text-3xl"
+				>
+					What I'm Good at.
+				</h3>
+				<div class="flex flex-wrap gap-3">
+					{#each skills as skill}
+						<div class="about-pill">
+							<SkillPill label={skill} />
+						</div>
+					{/each}
 				</div>
-			{/each}
+			</div>
 		</div>
 	</div>
 </section>
-
-<style>
-	.about-rotate-title {
-		transform: rotate(-90deg);
-	}
-
-	@media (max-width: 767px) {
-		.about-rotate-title {
-			opacity: 0.12;
-			position: absolute;
-			left: -3rem;
-			top: 50%;
-			transform: rotate(-90deg) translateX(-50%);
-			transform-origin: center center;
-		}
-	}
-</style>

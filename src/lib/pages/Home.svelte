@@ -1,5 +1,5 @@
-<div class="pointer-events-none relative inset-0 z-0 h-screen w-screen">
-	<div class="absolute bottom-0 left-0 -translate-x-100 translate-y-105">
+<div class="pointer-events-none relative inset-0 z-10 h-screen w-screen">
+	<div class="absolute bottom-0 left-0 -translate-x-105 translate-y-120">
 		{@render radial_gradient_circle()}
 	</div>
 	<div class="absolute top-0 right-0 translate-x-120 -translate-y-120">
@@ -7,30 +7,32 @@
 	</div>
 </div>
 
-<div class="pointer-events-none absolute inset-0 z-10 p-7">
-	<div class="flex h-screen flex-col leading-none">
-		<div class="h-[50%]"></div>
-		<div class="font-stroke-display text-[10rem] font-extrabold text-text-main">Hey,</div>
-		<div class="font-stroke-display text-[10rem] font-extrabold text-text-main">I'm Yashwanth</div>
+<div class="p-4">
+	<div class="pointer-events-none absolute inset-0 z-10 p-3">
+		<div class="flex h-screen flex-col leading-none">
+			<div class="h-[50%]"></div>
+			<div class="font-stroke-display text-[9rem] font-extrabold text-text-main">Hey,</div>
+			<div class="font-stroke-display text-[9rem] font-extrabold text-text-main">I'm Yashwanth</div>
+		</div>
+
+		<div
+			class="absolute bottom-0 left-0 flex h-190 w-190 -translate-x-60 translate-y-60 items-center justify-center"
+		>
+			<div class="h-100 w-100 rounded-full bg-accent"></div>
+		</div>
+		<div
+			class="absolute top-0 right-0 flex h-190 w-190 translate-x-70 -translate-y-70 items-center justify-center"
+		>
+			<div class="h-100 w-100 rounded-full bg-accent"></div>
+		</div>
 	</div>
 
-	<div
-		class="absolute bottom-0 left-0 flex h-190 w-190 -translate-x-60 translate-y-60 items-center justify-center"
-	>
-		<div class="h-100 w-100 rounded-full bg-accent"></div>
-	</div>
-	<div
-		class="absolute top-0 right-0 flex h-190 w-190 translate-x-70 -translate-y-70 items-center justify-center"
-	>
-		<div class="h-100 w-100 rounded-full bg-accent"></div>
-	</div>
-</div>
-
-<div class="pointer-events-none absolute inset-0 z-30 p-7">
-	<div class="flex h-screen flex-col leading-none">
-		<div class="h-[50%]"></div>
-		<div class="text-stroke font-stroke-display text-[10rem] font-extrabold">Hey,</div>
-		<div class="text-stroke font-stroke-display text-[10rem] font-extrabold">I'm Yashwanth</div>
+	<div class="pointer-events-none absolute inset-0 z-30 p-3">
+		<div class="flex h-screen flex-col leading-none">
+			<div class="h-[50%]"></div>
+			<div class="text-stroke font-stroke-display text-[9rem] font-extrabold">Hey,</div>
+			<div class="text-stroke font-stroke-display text-[9rem] font-extrabold">I'm Yashwanth</div>
+		</div>
 	</div>
 </div>
 
@@ -61,7 +63,7 @@
 <style>
 	#outer {
 		border-radius: 50%;
-		background: radial-gradient(circle, var(--accent, #f97316) 0%, rgba(249, 115, 22, 0) 100%);
+		background: radial-gradient(circle, var(--accent, #f97316) 0%, rgba(249, 115, 22, 0) 150%);
 		filter: url('#grn');
 		overflow: hidden;
 	}

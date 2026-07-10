@@ -12,12 +12,16 @@
 <div class="relative m-0 w-full overflow-x-hidden bg-bg-main p-0">
 	<!-- 3D Canvas Scroll Experience wrapper -->
 	<!-- We constrain this container to max-w-full to prevent horizontal scrolling on mobile -->
-	<div bind:this={threeDimContainer} id="3d-container" class="absolute inset-0 z-20 pointer-events-none bg-transparent max-w-full overflow-hidden">
+	<div
+		bind:this={threeDimContainer}
+		id="3d-container"
+		class="pointer-events-none absolute inset-0 z-20 max-w-full overflow-hidden bg-transparent"
+	>
 		<Tee />
 	</div>
 
 	<!-- Sections -->
-	<section id="home" class="relative min-h-screen w-full">
+	<section id="home" class="relative min-h-screen w-screen">
 		<Home />
 	</section>
 

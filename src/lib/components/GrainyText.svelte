@@ -21,7 +21,7 @@
 </svg>
 
 <h2
-	class="grainy-heading bg-clip-text font-black tracking-wider text-transparent text-{size}"
+	class="grainy-heading scale-x-90 scale-y-200 bg-clip-text font-black tracking-wider text-transparent text-{size}"
 	style="
 		background-image: linear-gradient(to bottom, var(--accent, #ff0000) 30%, transparent 250%);
 		filter: url(#{filterId});
