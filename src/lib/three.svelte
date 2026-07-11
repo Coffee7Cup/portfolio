@@ -86,8 +86,26 @@
 							trigger: containerElement,
 							start: 'top top',
 							end: 'bottom bottom',
-							scrub: 1
-						}
+							scrub: 1,
+
+							onLeave: () => {
+								gsap.to(containerElement, {
+									opacity: 0,
+									duration: 0.5,
+									ease: 'power1.out'
+								});
+							},
+
+							onEnterBack: () => {
+								gsap.to(containerElement, {
+									opacity: 1,
+									duration: 0.5,
+									ease: 'power1.out'
+								});
+							}
+						},
+
+						onComplete: () => {}
 					}
 				);
 			}
@@ -129,4 +147,3 @@
 		<canvas class="h-full w-full" bind:this={canvasElement}></canvas>
 	</div>
 </div>
-hello

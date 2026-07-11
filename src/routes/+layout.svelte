@@ -61,14 +61,17 @@
 
 <!-- Floating Nav Bar -->
 <header
-	class="fixed top-5 left-1/2 z-100 flex -translate-x-1/2 items-center gap-6 rounded-full border border-text-main/10 bg-bg-main/70 px-6 py-3 backdrop-blur-md transition-all duration-300 md:gap-8 md:px-8"
+	class="fixed top-5 left-1/2 z-1000 flex -translate-x-1/2 items-center gap-6 rounded-full border border-text-main/10 bg-bg-main/70 px-6 py-3 backdrop-blur-md transition-all duration-300 md:gap-8 md:px-8"
 >
 	<nav class="flex items-center gap-4 md:gap-6">
 		{#each navItems as item}
 			<a
 				href="#{item.id}"
 				onclick={(e) => handleNavClick(e, item.id)}
-				class="font-stroke-clean text-xs font-bold uppercase tracking-wider transition-colors duration-300 md:text-sm {activeSection === item.id ? 'text-accent' : 'text-text-sub hover:text-text-main'}"
+				class="font-stroke-clean text-xs font-bold tracking-wider uppercase transition-colors duration-300 md:text-sm {activeSection ===
+				item.id
+					? 'text-accent'
+					: 'text-text-sub hover:text-text-main'}"
 			>
 				{item.label}
 			</a>
@@ -85,7 +88,7 @@
 	>
 		<!-- Sun icon (visible in dark mode) -->
 		<svg
-			class="hidden h-4 w-4 group-hover:scale-110 transition-transform duration-300 dark:block"
+			class="hidden h-4 w-4 transition-transform duration-300 group-hover:scale-110 dark:block"
 			fill="none"
 			stroke="currentColor"
 			stroke-width="2"
@@ -99,7 +102,7 @@
 		</svg>
 		<!-- Moon icon (visible in light mode) -->
 		<svg
-			class="block h-4 w-4 group-hover:scale-110 transition-transform duration-300 dark:hidden"
+			class="block h-4 w-4 transition-transform duration-300 group-hover:scale-110 dark:hidden"
 			fill="none"
 			stroke="currentColor"
 			stroke-width="2"

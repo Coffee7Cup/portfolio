@@ -3,77 +3,125 @@
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+	import { browser } from '$app/environment';
+	import {
+		Rust,
+		CPlusplus,
+		Kotlin,
+		Go,
+		Javascript,
+		Python,
+		Lua,
+		Bash,
+		_React,
+		SvelteIcon,
+		Neovim,
+		Git,
+		LinuxTux,
+		Fedora,
+		Android
+	} from '@dev.icons/svelte';
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state();
-
-	const skillCategories = [
+	let skill_data = [
 		{
 			name: 'Languages',
 			items: [
-				{ name: 'Rust', level: 90 },
-				{ name: 'C / C++', level: 85 },
-				{ name: 'Go', level: 80 },
-				{ name: 'Python', level: 75 },
-				{ name: 'JavaScript / TypeScript', level: 85 },
-				{ name: 'Kotlin', level: 70 }
+				{
+					icon: Rust,
+					why_this:
+						'Systems programming, concurrency safety, and building performant TUI applications.'
+				},
+				{
+					icon: CPlusplus,
+					why_this:
+						'Low-level control, algorithms, raw sockets, and advanced network implementations.'
+				},
+				{
+					icon: Kotlin,
+					why_this: 'Modern Android ecosystem development and building scalable mobile plugins.'
+				},
+				{
+					icon: Go,
+					why_this:
+						'Fast compilation, clean syntax, and building high-performance networking tools.'
+				},
+				{
+					icon: Javascript,
+					why_this: 'Dynamic frontend scripting and asynchronous interaction handling.'
+				},
+				{
+					icon: Python,
+					why_this: 'Rapid prototyping, automation scripting, and local AI/ML engine processing.'
+				},
+				{
+					icon: Lua,
+					why_this: 'Lightweight configuration design and deeply customizing Neovim workflows.'
+				},
+				{
+					icon: SvelteIcon,
+					why_this: 'Declaring reactive, lightweight user interfaces without virtual DOM overhead.'
+				},
+				{
+					icon: Bash,
+					why_this: 'Automation, environment customization, and deep pipeline terminal scripting.'
+				}
 			]
 		},
 		{
-			name: 'Frameworks & Tools',
+			name: 'Frameworks',
 			items: [
-				{ name: 'Svelte / SvelteKit', level: 85 },
-				{ name: 'React / Next.js', level: 75 },
-				{ name: 'Three.js / WebGL', level: 70 },
-				{ name: 'Android SDK', level: 75 },
-				{ name: 'Docker', level: 80 },
-				{ name: 'Git', level: 90 }
+				{
+					icon: SvelteIcon,
+					why_this:
+						'Routing, state management, and handling animations cleanly on full-stack web platforms.'
+				},
+				{
+					icon: _React,
+					why_this: 'Building dynamic, modular web views and reusable UI component architectures.'
+				},
+				{
+					icon: Android,
+					why_this: 'Modern native Android UI architecture utilizing declarative state components.'
+				},
+				{
+					icon: Rust,
+					why_this:
+						'Crafting lightweight, cross-platform native desktop GUI architectures in pure Rust.'
+				}
 			]
 		},
 		{
-			name: 'Platforms & Systems',
+			name: 'Tools & Ecosystem',
 			items: [
-				{ name: 'Linux (Wayland / X11)', level: 90 },
-				{ name: 'Layer Shell Protocol', level: 85 },
-				{ name: 'Networking / TCP/UDP', level: 80 },
-				{ name: 'System Design', level: 75 },
-				{ name: 'CI / CD Pipelines', level: 70 },
-				{ name: 'Cloud (AWS / GCP)', level: 65 }
+				{
+					icon: Neovim,
+					why_this:
+						'Blazing fast, keyboard-driven development workflows and fully personalized IDE optimization.'
+				},
+				{
+					icon: Git,
+					why_this:
+						'Distributed version control, team collaboration tracking, and codebase management.'
+				},
+				{
+					icon: LinuxTux,
+					why_this:
+						'Primary operating system environment, custom kernel logic, and systems control.'
+				},
+				{
+					icon: Fedora,
+					why_this: 'Cutting-edge packages, stability, and minimalist ricing configurations.'
+				},
+				{
+					icon: LinuxTux,
+					why_this:
+						'Modern display protocol layer powering fluid workspace rendering and window rules.'
+				}
 			]
 		}
 	];
-
-	onMount(() => {
-		const ctx = gsap.context(() => {
-			gsap.from('.skill-category', {
-				y: 50,
-				opacity: 0,
-				duration: 0.7,
-				stagger: 0.15,
-				ease: 'power3.out',
-				scrollTrigger: {
-					trigger: sectionEl,
-					start: 'top 60%',
-					toggleActions: 'play none none reverse'
-				}
-			});
-
-			gsap.from('.skill-bar-fill', {
-				width: 0,
-				duration: 1,
-				stagger: 0.05,
-				ease: 'power3.out',
-				scrollTrigger: {
-					trigger: sectionEl,
-					start: 'top 50%',
-					toggleActions: 'play none none reverse'
-				}
-			});
-		}, sectionEl);
-
-		return () => ctx.revert();
-	});
 </script>
 
 <section
@@ -83,36 +131,26 @@
 >
 	<!-- Rotated SKILLS title -->
 	<div
-		class="skills-title-col pointer-events-none absolute left-0 z-10 flex h-full items-center md:relative md:w-48 lg:w-56"
+		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
+		       justify-center px-4"
 	>
-		<div class="skills-rotate-title whitespace-nowrap">
-			<GrainyText text="SKILLS" size="8xl md:text-9xl lg:text-[11rem]" id="skills" />
+		<div class="-rotate-90 whitespace-nowrap">
+			<GrainyText text="SKILLS" size="8xl text-[7rem] font-stroke-display" id="skills" />
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="relative z-20 flex flex-1 flex-col justify-center px-8 py-24 md:px-16 lg:px-24">
-		<div class="grid max-w-4xl gap-10 md:grid-cols-2 lg:grid-cols-3">
-			{#each skillCategories as category}
-				<div class="skill-category">
-					<h3
-						class="mb-6 font-stroke-display text-lg font-extrabold tracking-wider text-accent md:text-xl"
-					>
-						{category.name}
-					</h3>
-					<div class="flex flex-col gap-4">
-						{#each category.items as skill}
-							<div class="skill-item">
-								<div class="mb-1.5 flex items-center justify-between">
-									<span class="font-main text-sm font-medium text-text-main">{skill.name}</span>
-									<span class="font-main text-xs text-text-sub">{skill.level}%</span>
-								</div>
-								<div class="h-1.5 w-full overflow-hidden rounded-full bg-text-main/10">
-									<div
-										class="skill-bar-fill h-full rounded-full"
-										style="width: {skill.level}%; background: linear-gradient(90deg, var(--accent) 0%, rgba(255,0,0,0.4) 100%);"
-									></div>
-								</div>
+	<div class="z-100 flex h-screen w-screen items-center justify-center px-20 py-10 pt-16">
+		<div class="grid h-full w-full grid-cols-3 gap-5 backdrop-blur-md">
+			{#each skill_data as skill}
+				<div class="flex h-full w-full flex-col items-center justify-start text-3xl">
+					<div class="p-6 font-stroke-display text-accent">{skill.name}</div>
+					<div class="grid w-full grid-cols-2 gap-5">
+						{#each skill.items as item}
+							<div class="flex w-full items-center justify-center text-accent">
+								{#if browser}
+									<svelte:component this={item.icon} size={70} />
+								{/if}
 							</div>
 						{/each}
 					</div>
@@ -121,20 +159,3 @@
 		</div>
 	</div>
 </section>
-
-<style>
-	.skills-rotate-title {
-		transform: rotate(-90deg);
-	}
-
-	@media (max-width: 767px) {
-		.skills-rotate-title {
-			opacity: 0.12;
-			position: absolute;
-			left: -3rem;
-			top: 50%;
-			transform: rotate(-90deg) translateX(-50%);
-			transform-origin: center center;
-		}
-	}
-</style>
