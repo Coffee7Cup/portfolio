@@ -9,10 +9,11 @@
 
 <div class="p-4">
 	<div class="pointer-events-none absolute inset-0 z-10 p-3">
-		<div class="flex h-screen flex-col leading-none">
-			<div class="h-[50%]"></div>
-			<div class="font-stroke-display text-[9rem] font-extrabold text-text-main">Hey,</div>
-			<div class="font-stroke-display text-[9rem] font-extrabold text-text-main">I'm Yashwanth</div>
+		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
+			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">Hey,</div>
+			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
+				I'm Yashwanth
+			</div>
 		</div>
 
 		<div
@@ -28,10 +29,13 @@
 	</div>
 
 	<div class="pointer-events-none absolute inset-0 z-30 p-3">
-		<div class="flex h-screen flex-col leading-none">
-			<div class="h-[50%]"></div>
-			<div class="text-stroke font-stroke-display text-[9rem] font-extrabold">Hey,</div>
-			<div class="text-stroke font-stroke-display text-[9rem] font-extrabold">I'm Yashwanth</div>
+		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
+			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
+				Hey,
+			</div>
+			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
+				I'm Yashwanth
+			</div>
 		</div>
 	</div>
 </div>

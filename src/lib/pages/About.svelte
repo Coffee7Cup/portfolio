@@ -72,7 +72,7 @@
 		       justify-center px-4"
 	>
 		<div class="-rotate-90 whitespace-nowrap">
-			<GrainyText text="ABOUT" size="8xl text-[7rem] font-stroke-display" id="about" />
+			<GrainyText text="ABOUT" size=" text-[7rem] font-stroke-display" id="about" />
 		</div>
 	</div>
 

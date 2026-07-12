@@ -1,62 +1,126 @@
 <script>
 	import { onMount } from 'svelte';
 	import GrainyText from '$lib/components/GrainyText.svelte';
-	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	let sectionEl = $state();
-
 	const projects = [
 		{
-			title: 'LayerShell Panel & Launcher',
-			description: 'A custom, lightweight Wayland panel and application launcher written in Rust utilizing the wlr-layer-shell protocol. Features dynamic workspaces, system tray integration, and low memory overhead.',
-			tags: ['Rust', 'Wayland', 'GTK', 'System Programming'],
-			github: 'https://github.com',
-			live: ''
+			img: '/images/all-in-one.png',
+			title: 'All In One',
+			desc: 'A small experiment in interface and motion — built to explore how structure can feel alive under the cursor.'
 		},
 		{
-			title: 'AftNet: Custom TCP/UDP Router',
-			description: 'A low-level user-space custom TCP/UDP routing engine optimized for low-latency network traffic. Features congestion control, packet shaping, and visual performance monitoring interface.',
-			tags: ['C++', 'Linux Socket API', 'Networking', 'Systems'],
-			github: 'https://github.com',
-			live: ''
+			img: '/images/apav.png',
+			title: 'Apav',
+			desc: 'A tool born out of a repetitive problem, turned into something you actually want to open.'
 		},
 		{
-			title: 'KubeGlow Visual Dashboard',
-			description: 'A web-based interactive 3D visualization dashboard for local Kubernetes clusters. Uses Three.js to render cluster pods, services, and traffic flows in real-time.',
-			tags: ['SvelteKit', 'Three.js', 'Go', 'Kubernetes API'],
-			github: 'https://github.com',
-			live: 'https://example.com'
+			img: '/images/cie.png',
+			title: 'CIE',
+			desc: 'Minimal on the surface, a little chaotic underneath — the way most good tools are.'
 		},
 		{
-			title: 'Android Native Music Controller',
-			description: 'A native Android system controller that lets users manage system-wide audio endpoints and streaming routes through advanced audio routing APIs.',
-			tags: ['Kotlin', 'Android SDK', 'NDK', 'Audio Routing'],
-			github: 'https://github.com',
-			live: ''
+			img: '/images/demo-window-switcher.png',
+			title: 'Window Switcher',
+			desc: 'Built because alt-tab was never fast enough. Rust under the hood, muscle memory on top.'
+		},
+		{
+			img: '/images/w-0.png',
+			title: 'W Zero',
+			desc: 'The one that started as a weekend hack and refused to stay small.'
 		}
 	];
 
-	onMount(() => {
-		const ctx = gsap.context(() => {
-			gsap.from('.project-item', {
-				y: 60,
-				opacity: 0,
-				duration: 0.8,
-				stagger: 0.15,
-				ease: 'power3.out',
-				scrollTrigger: {
-					trigger: sectionEl,
-					start: 'top 50%',
-					toggleActions: 'play none none reverse'
-				}
-			});
-		}, sectionEl);
+	// Configuration for pure row animation
+	const ROWS = 8;
+	const COLS = 1;
+	const cells = Array.from({ length: ROWS * COLS });
 
-		return () => ctx.revert();
+	let sectionEl, titleEl, descEl, imgEl;
+	let panelEls = [];
+	let currentIndex = $state(0);
+
+	onMount(() => {
+		// scaleY controls the height of each row block
+		gsap.set(panelEls, { scaleY: 1 });
+		gsap.set(imgEl, { scale: 1.08, opacity: 0 });
+
+		// Intro Reveal (Top to Bottom)
+		const introTl = gsap.timeline({ delay: 0.2 });
+		introTl
+			.to(imgEl, { opacity: 1, duration: 0.4 })
+			.to(
+				panelEls,
+				{
+					scaleY: 0,
+					duration: 0.7,
+					ease: 'power4.inOut',
+					stagger: 0.05 // Staggers row by row sequentially
+				},
+				'<'
+			)
+			.to(imgEl, { scale: 1, duration: 1.1, ease: 'power3.out' }, '<')
+			.fromTo(
+				[titleEl, descEl],
+				{ opacity: 0, y: 16 },
+				{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+				'-=0.4'
+			);
+
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: sectionEl,
+				start: 'top top',
+				end: () => `+=${(projects.length - 1) * window.innerHeight}`,
+				scrub: 1,
+				pin: true,
+				anticipatePin: 1
+			}
+		});
+
+		projects.forEach((_, i) => {
+			if (i === projects.length - 1) return;
+
+			tl.to([titleEl, descEl], { opacity: 0, y: -12, duration: 0.2 })
+				.to(imgEl, { scale: 1.08, opacity: 0.3, duration: 0.4 }, '<')
+				// Cover Image (Bottom to Top)
+				.to(
+					panelEls,
+					{
+						scaleY: 1,
+						transformOrigin: 'bottom',
+						duration: 0.5,
+						ease: 'power3.inOut',
+						stagger: { each: 0.04, from: 'end' }
+					},
+					'<'
+				)
+				.set(imgEl, { attr: { src: projects[i + 1].img } })
+				.call(() => (currentIndex = i + 1))
+				.set(panelEls, { transformOrigin: 'top' })
+				// Reveal Image (Top to Bottom)
+				.to(imgEl, { opacity: 1, duration: 0.3 })
+				.to(
+					panelEls,
+					{
+						scaleY: 0,
+						duration: 0.6,
+						ease: 'power4.inOut',
+						stagger: { each: 0.04, from: 'start' }
+					},
+					'<'
+				)
+				.to(imgEl, { scale: 1, duration: 0.8, ease: 'power3.out' }, '<')
+				.to([titleEl, descEl], { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.35');
+		});
+
+		return () => {
+			tl.scrollTrigger?.kill();
+			tl.kill();
+		};
 	});
 </script>
 
@@ -67,44 +131,47 @@
 >
 	<!-- Rotated PROJECTS title -->
 	<div
-		class="projects-title-col pointer-events-none absolute left-0 z-10 flex h-full items-center md:relative md:w-48 lg:w-56"
+		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
+		       justify-center px-4"
 	>
-		<div class="projects-rotate-title whitespace-nowrap">
-			<GrainyText text="PROJECTS" size="8xl md:text-9xl lg:text-[11rem]" id="projects" />
+		<div class="-rotate-90 whitespace-nowrap">
+			<GrainyText text="PROJECTS" size="text-[7rem] font-stroke-display" id="project" />
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="relative z-20 flex flex-1 flex-col justify-center px-8 py-24 md:px-16 lg:px-24">
-		<div class="grid max-w-5xl gap-6 md:grid-cols-2">
-			{#each projects as project}
-				<div class="project-item">
-					<ProjectCard
-						title={project.title}
-						description={project.description}
-						tags={project.tags}
-						github={project.github}
-						live={project.live}
-					/>
+	<div class="z-10 flex h-screen w-screen items-center justify-center p-20">
+		<div class="relative w-full">
+			<!-- image frame -->
+			<div class="relative aspect-video w-full overflow-hidden rounded-md bg-neutral-950">
+				<img
+					bind:this={imgEl}
+					src={projects[0].img}
+					alt={projects[0].title}
+					class="absolute inset-0 h-full w-full object-contain p-6"
+				/>
+
+				<!-- reveal panels -->
+				<div
+					class="pointer-events-none absolute inset-0 grid"
+					style="grid-template-rows: repeat({ROWS}, 1fr); grid-template-columns: 1fr;"
+				>
+					{#each cells as _, i}
+						<div bind:this={panelEls[i]} class="w-full origin-bottom bg-bg-main"></div>
+					{/each}
 				</div>
-			{/each}
+				<!-- description, bottom-right, overlapping the frame -->
+				<div
+					class="absolute right-0 bottom-0 z-20 m-10 max-w-150 rounded-md bg-bg-main/40 p-10 backdrop-blur-sm"
+				>
+					<h3 bind:this={titleEl} class="mb-1 text-xl font-bold">
+						{projects[currentIndex].title}
+					</h3>
+					<p bind:this={descEl} class="text-sm leading-relaxed opacity-80">
+						{projects[currentIndex].desc}
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
-
-<style>
-	.projects-rotate-title {
-		transform: rotate(-90deg);
-	}
-
-	@media (max-width: 767px) {
-		.projects-rotate-title {
-			opacity: 0.12;
-			position: absolute;
-			left: -4rem;
-			top: 50%;
-			transform: rotate(-90deg) translateX(-50%);
-			transform-origin: center center;
-		}
-	}
-</style>

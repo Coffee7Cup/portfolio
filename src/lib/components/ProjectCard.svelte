@@ -2,10 +2,12 @@
 	let { title, description, tags = [], github = '', live = '' } = $props();
 </script>
 
-<div class="project-card group relative overflow-hidden rounded-2xl border border-text-main/10 bg-text-main/5 p-6 transition-all duration-500 hover:border-accent/40 hover:shadow-[0_0_40px_rgba(255,0,0,0.08)] md:p-8">
+<div
+	class="project-card group relative overflow-hidden rounded-2xl border border-text-main/10 bg-text-main/5 p-6 transition-all duration-500 hover:border-accent/40 hover:shadow-[0_0_40px_rgba(255,0,0,0.08)] md:p-8"
+>
 	<!-- Red accent line top -->
 	<div
-		class="absolute top-0 left-0 h-[2px] w-0 bg-gradient-to-r from-accent to-transparent transition-all duration-500 group-hover:w-full"
+		class="absolute top-0 left-0 h-[7px] w-0 bg-gradient-to-r from-accent to-transparent transition-all duration-500 group-hover:w-full"
 	></div>
 
 	<!-- Project number / decorative -->
@@ -39,9 +41,19 @@
 					class="rounded-lg border border-text-main/20 p-2 text-text-sub transition-all duration-300 hover:border-accent hover:text-accent"
 					aria-label="View live demo"
 				>
-					<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+					<svg
+						class="h-5 w-5"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M14 3h7m0 0v7m0-7L10 14" />
-						<path stroke-linecap="round" stroke-linejoin="round" d="M5 3h-1a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-1" />
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M5 3h-1a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-1"
+						/>
 					</svg>
 				</a>
 			{/if}
@@ -55,9 +67,7 @@
 	<!-- Tech tags -->
 	<div class="flex flex-wrap gap-2">
 		{#each tags as tag}
-			<span
-				class="rounded-md bg-accent/10 px-3 py-1 font-main text-xs font-medium text-accent/80"
-			>
+			<span class="rounded-md bg-accent/10 px-3 py-1 font-main text-xs font-medium text-accent/80">
 				{tag}
 			</span>
 		{/each}

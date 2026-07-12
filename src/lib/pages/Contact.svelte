@@ -56,13 +56,13 @@
 >
 	<!-- Rotated CONTACT title -->
 	<div
-		class="contact-title-col pointer-events-none absolute left-0 z-10 flex h-full items-center md:relative md:w-48 lg:w-56"
+		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
+		       justify-center px-4"
 	>
-		<div class="contact-rotate-title whitespace-nowrap">
-			<GrainyText text="CONTACT" size="8xl md:text-9xl lg:text-[11rem]" id="contact" />
+		<div class="-rotate-90 whitespace-nowrap">
+			<GrainyText text="ABOUT" size=" text-[7rem] font-stroke-display" id="about" />
 		</div>
 	</div>
-
 	<!-- Content -->
 	<div class="relative z-20 flex flex-1 flex-col justify-center px-8 py-24 md:px-16 lg:px-24">
 		<div class="grid max-w-5xl gap-12 md:grid-cols-2">
@@ -74,7 +74,10 @@
 
 				<form onsubmit={handleSubmit} class="flex flex-col gap-5">
 					<div>
-						<label for="name" class="mb-2 block font-main text-xs font-semibold uppercase tracking-wider text-text-sub">
+						<label
+							for="name"
+							class="mb-2 block font-main text-xs font-semibold tracking-wider text-text-sub uppercase"
+						>
 							Name
 						</label>
 						<input
@@ -87,7 +90,10 @@
 					</div>
 
 					<div>
-						<label for="email" class="mb-2 block font-main text-xs font-semibold uppercase tracking-wider text-text-sub">
+						<label
+							for="email"
+							class="mb-2 block font-main text-xs font-semibold tracking-wider text-text-sub uppercase"
+						>
 							Email Address
 						</label>
 						<input
@@ -100,7 +106,10 @@
 					</div>
 
 					<div>
-						<label for="message" class="mb-2 block font-main text-xs font-semibold uppercase tracking-wider text-text-sub">
+						<label
+							for="message"
+							class="mb-2 block font-main text-xs font-semibold tracking-wider text-text-sub uppercase"
+						>
 							Message
 						</label>
 						<textarea
@@ -108,14 +117,14 @@
 							required
 							rows="4"
 							placeholder="What are we building?"
-							class="w-full rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)] resize-none"
+							class="w-full resize-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)]"
 						></textarea>
 					</div>
 
 					<button
 						type="submit"
 						disabled={formStatus === 'sending' || formStatus === 'success'}
-						class="mt-2 flex items-center justify-center rounded-xl bg-accent px-6 py-3.5 font-stroke-clean text-sm font-bold uppercase tracking-wider text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,0,0,0.4)] active:scale-[0.98] disabled:scale-100 disabled:opacity-50"
+						class="mt-2 flex items-center justify-center rounded-xl bg-accent px-6 py-3.5 font-stroke-clean text-sm font-bold tracking-wider text-white uppercase transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,0,0,0.4)] active:scale-[0.98] disabled:scale-100 disabled:opacity-50"
 					>
 						{#if formStatus === 'sending'}
 							Sending...
@@ -135,19 +144,36 @@
 						Let's connect.
 					</h3>
 					<p class="mb-8 font-main text-sm leading-relaxed text-text-sub md:text-base">
-						Whether you want to discuss a low-level systems project, talk about a backend infrastructure, or just talk tech, feel free to reach out. I'm always open to discussing new opportunities.
+						Whether you want to discuss a low-level systems project, talk about a backend
+						infrastructure, or just talk tech, feel free to reach out. I'm always open to discussing
+						new opportunities.
 					</p>
 
 					<div class="flex flex-col gap-4">
 						<div class="flex items-center gap-4">
-							<div class="flex h-11 w-11 items-center justify-center rounded-lg border border-text-main/10 bg-text-main/5 text-accent">
-								<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+							<div
+								class="flex h-11 w-11 items-center justify-center rounded-lg border border-text-main/10 bg-text-main/5 text-accent"
+							>
+								<svg
+									class="h-5 w-5"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+									/>
 								</svg>
 							</div>
 							<div>
 								<span class="block font-main text-xs text-text-sub">Email Address</span>
-								<a href="mailto:yashwanth@example.com" class="font-main text-sm font-semibold text-text-main hover:text-accent transition-colors duration-300">
+								<a
+									href="mailto:yashwanth@example.com"
+									class="font-main text-sm font-semibold text-text-main transition-colors duration-300 hover:text-accent"
+								>
 									yashwanth@example.com
 								</a>
 							</div>
@@ -157,7 +183,9 @@
 
 				<!-- Social Links Grid -->
 				<div class="mt-12">
-					<span class="mb-4 block font-main text-xs font-semibold uppercase tracking-wider text-text-sub">
+					<span
+						class="mb-4 block font-main text-xs font-semibold tracking-wider text-text-sub uppercase"
+					>
 						Follow Me
 					</span>
 					<div class="flex flex-wrap gap-3">

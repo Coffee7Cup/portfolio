@@ -2,6 +2,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@700..900&display=swap');
 
 @theme {
 	--color-bg-main: var(--bg-main);
@@ -10,8 +11,8 @@
 	--color-accent: var(--accent);
 	--font-main: 'Inter', system-ui, sans-serif;
 	--font-sub: 'Inter', system-ui, sans-serif;
-	--font-stroke-display: 'Syne', 'Outfit', sans-serif;
-	--font-stroke-clean: 'Plus Jakarta Sans', 'Unbounded', sans-serif;
+	--font-stroke-display: 'Lexend Deca', 'Syne', sans-serif;
+	--font-stroke-clean: 'Unbounded', sans-serif;
 }
 
 :root {
