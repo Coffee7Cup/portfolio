@@ -1,13 +1,18 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { Github, GithubIcon, Linkerd, Twitter } from '@dev.icons/svelte/mono';
+	import { browser } from '$app/environment';
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state();
 	let formStatus = $state('');
+
+	const portfolio = getContext('portfolio');
+	const personal = portfolio.personal;
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -60,7 +65,7 @@
 		       justify-center px-4"
 	>
 		<div class="-rotate-90 whitespace-nowrap">
-			<GrainyText text="ABOUT" size=" text-[7rem] font-stroke-display" id="about" />
+			<GrainyText text="CONTACT" size=" text-[7rem] font-stroke-display" id="contact" />
 		</div>
 	</div>
 	<!-- Content -->
@@ -171,10 +176,10 @@
 							<div>
 								<span class="block font-main text-xs text-text-sub">Email Address</span>
 								<a
-									href="mailto:yashwanth@example.com"
+									href="mailto:{personal.email}"
 									class="font-main text-sm font-semibold text-text-main transition-colors duration-300 hover:text-accent"
 								>
-									yashwanth@example.com
+									{personal.email}
 								</a>
 							</div>
 						</div>
@@ -190,27 +195,36 @@
 					</span>
 					<div class="flex flex-wrap gap-3">
 						<a
-							href="https://github.com"
+							href={personal.github}
 							target="_blank"
 							rel="noopener noreferrer"
 							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-text-main transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						>
+							{#if browser}
+								<GithubIcon size={20} />
+							{/if}
 							<span>GitHub</span>
 						</a>
 						<a
-							href="https://linkedin.com"
+							href={personal.linkedin}
 							target="_blank"
 							rel="noopener noreferrer"
 							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-text-main transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						>
+							{#if browser}
+								<Linkerd size={20} />
+							{/if}
 							<span>LinkedIn</span>
 						</a>
 						<a
-							href="https://twitter.com"
+							href={personal.twitter}
 							target="_blank"
 							rel="noopener noreferrer"
 							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-text-main transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						>
+							{#if browser}
+								<Twitter size={20} />
+							{/if}
 							<span>Twitter</span>
 						</a>
 					</div>
@@ -219,7 +233,7 @@
 				<!-- Footer -->
 				<div class="mt-16 border-t border-text-main/10 pt-6">
 					<p class="font-main text-xs text-text-sub">
-						&copy; {new Date().getFullYear()} Yashwanth. Built with SvelteKit, GSAP, and Tailwind.
+						&copy; {new Date().getFullYear()} {personal.name}. Built with SvelteKit, GSAP, and Tailwind.
 					</p>
 				</div>
 			</div>

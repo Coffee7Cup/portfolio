@@ -4,6 +4,7 @@
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { base } from '$app/paths';
 
 	gsap.registerPlugin(ScrollTrigger);
 
@@ -33,7 +34,7 @@
 		const animationProxy = { time: 0.5 };
 
 		const loader = new GLTFLoader();
-		loader.load('/prop.glb', (gltf) => {
+		loader.load(`${base}/prop.glb`, (gltf) => {
 			const model = gltf.scene;
 			scene.add(model);
 

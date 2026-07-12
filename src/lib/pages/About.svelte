@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import SkillPill from '$lib/components/SkillPill.svelte';
 	import { gsap } from 'gsap';
@@ -9,13 +9,8 @@
 
 	let sectionEl = $state();
 
-	const skills = [
-		'Low level systems',
-		'Backend systems',
-		'Linux native (layershell applications)',
-		'Android dev',
-		'Web dev'
-	];
+	const portfolio = getContext('portfolio');
+	const { bio, highlights: skills } = portfolio.about;
 
 	onMount(() => {
 		const ctx = gsap.context(() => {
@@ -81,9 +76,7 @@
 		<div class="mt-52 flex-1 flex-col pl-32">
 			<div class="w-full max-w-2xl">
 				<p class="about-bio font-main text-xl leading-relaxed font-medium text-text-main">
-					I am a developer focused on building clean, efficient, and user-centric digital
-					experiences. I specialize in systems programming, custom networking architectures, and
-					crafting responsive frontend interfaces.
+					{bio}
 				</p>
 				<h3
 					class="about-subheading mt-10 mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl lg:text-3xl"

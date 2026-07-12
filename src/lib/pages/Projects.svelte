@@ -1,46 +1,31 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, getContext } from 'svelte';
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { base } from '$app/paths';
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const projects = [
-		{
-			img: '/images/all-in-one.png',
-			title: 'All In One',
-			desc: 'A small experiment in interface and motion — built to explore how structure can feel alive under the cursor.'
-		},
-		{
-			img: '/images/apav.png',
-			title: 'Apav',
-			desc: 'A tool born out of a repetitive problem, turned into something you actually want to open.'
-		},
-		{
-			img: '/images/cie.png',
-			title: 'CIE',
-			desc: 'Minimal on the surface, a little chaotic underneath — the way most good tools are.'
-		},
-		{
-			img: '/images/demo-window-switcher.png',
-			title: 'Window Switcher',
-			desc: 'Built because alt-tab was never fast enough. Rust under the hood, muscle memory on top.'
-		},
-		{
-			img: '/images/w-0.png',
-			title: 'W Zero',
-			desc: 'The one that started as a weekend hack and refused to stay small.'
-		}
-	];
+	const portfolio = getContext('portfolio');
+	const projects = portfolio.projects.map((p) => ({
+		...p,
+		img:
+			p.img.startsWith('http') || p.img.startsWith(base)
+				? p.img
+				: `${base}/${p.img.replace(/^\//, '')}`
+	}));
 
 	// Configuration for pure row animation
 	const ROWS = 8;
 	const COLS = 1;
 	const cells = Array.from({ length: ROWS * COLS });
 
-	let sectionEl, titleEl, descEl, imgEl;
-	let panelEls = [];
+	let sectionEl = $state(null);
+	let titleEl = $state(null);
+	let descEl = $state(null);
+	let imgEl = $state(null);
+	let panelEls = $state([]);
 	let currentIndex = $state(0);
 
 	onMount(() => {
@@ -170,6 +155,17 @@
 					<p bind:this={descEl} class="text-sm leading-relaxed opacity-80">
 						{projects[currentIndex].desc}
 					</p>
+					{#if projects[currentIndex].tags}
+						<div class="mt-4 flex flex-wrap gap-2">
+							{#each projects[currentIndex].tags as tag (tag)}
+								<span
+									class="dark:text-accent-light rounded-md bg-accent/20 px-2.5 py-1 font-main text-xs font-semibold text-accent dark:bg-accent/30"
+								>
+									{tag}
+								</span>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			</div>
 		</div>

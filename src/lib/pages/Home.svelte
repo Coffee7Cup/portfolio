@@ -1,3 +1,9 @@
+<script>
+	import { getContext } from 'svelte';
+	const portfolio = getContext('portfolio');
+	const personal = portfolio.personal;
+</script>
+
 <div class="pointer-events-none relative inset-0 z-10 h-screen w-screen">
 	<div class="absolute bottom-0 left-0 -translate-x-105 translate-y-120">
 		{@render radial_gradient_circle()}
@@ -12,7 +18,7 @@
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
 			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">Hey,</div>
 			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
-				I'm Yashwanth
+				I'm {personal.name}
 			</div>
 		</div>
 
@@ -34,7 +40,7 @@
 				Hey,
 			</div>
 			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
-				I'm Yashwanth
+				I'm {personal.name}
 			</div>
 		</div>
 	</div>

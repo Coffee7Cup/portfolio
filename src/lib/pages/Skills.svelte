@@ -20,7 +20,7 @@
 		LinuxTux,
 		Fedora,
 		Android
-	} from '@dev.icons/svelte';
+	} from '@dev.icons/svelte/mono';
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state();
@@ -30,41 +30,47 @@
 			items: [
 				{
 					icon: Rust,
-					why_this:
-						'Systems programming, concurrency safety, and building performant TUI applications.'
+					name: 'Rust',
+					why_this: 'Systems programming, concurrency safety, and building performant TUI applications.'
 				},
 				{
 					icon: CPlusplus,
-					why_this:
-						'Low-level control, algorithms, raw sockets, and advanced network implementations.'
+					name: 'C++',
+					why_this: 'Low-level control, algorithms, raw sockets, and advanced network implementations.'
 				},
 				{
 					icon: Kotlin,
+					name: 'Kotlin',
 					why_this: 'Modern Android ecosystem development and building scalable mobile plugins.'
 				},
 				{
 					icon: Go,
-					why_this:
-						'Fast compilation, clean syntax, and building high-performance networking tools.'
+					name: 'Go',
+					why_this: 'Fast compilation, clean syntax, and building high-performance networking tools.'
 				},
 				{
 					icon: Javascript,
+					name: 'JavaScript',
 					why_this: 'Dynamic frontend scripting and asynchronous interaction handling.'
 				},
 				{
 					icon: Python,
+					name: 'Python',
 					why_this: 'Rapid prototyping, automation scripting, and local AI/ML engine processing.'
 				},
 				{
 					icon: Lua,
+					name: 'Lua',
 					why_this: 'Lightweight configuration design and deeply customizing Neovim workflows.'
 				},
 				{
 					icon: SvelteIcon,
+					name: 'Svelte',
 					why_this: 'Declaring reactive, lightweight user interfaces without virtual DOM overhead.'
 				},
 				{
 					icon: Bash,
+					name: 'Bash',
 					why_this: 'Automation, environment customization, and deep pipeline terminal scripting.'
 				}
 			]
@@ -74,21 +80,23 @@
 			items: [
 				{
 					icon: SvelteIcon,
-					why_this:
-						'Routing, state management, and handling animations cleanly on full-stack web platforms.'
+					name: 'SvelteKit',
+					why_this: 'Routing, state management, and handling animations cleanly on full-stack web platforms.'
 				},
 				{
 					icon: _React,
+					name: 'React',
 					why_this: 'Building dynamic, modular web views and reusable UI component architectures.'
 				},
 				{
 					icon: Android,
+					name: 'Android',
 					why_this: 'Modern native Android UI architecture utilizing declarative state components.'
 				},
 				{
 					icon: Rust,
-					why_this:
-						'Crafting lightweight, cross-platform native desktop GUI architectures in pure Rust.'
+					name: 'Iced.rs',
+					why_this: 'Crafting lightweight, cross-platform native desktop GUI architectures in pure Rust.'
 				}
 			]
 		},
@@ -97,27 +105,28 @@
 			items: [
 				{
 					icon: Neovim,
-					why_this:
-						'Blazing fast, keyboard-driven development workflows and fully personalized IDE optimization.'
+					name: 'Neovim',
+					why_this: 'Blazing fast, keyboard-driven development workflows and fully personalized IDE optimization.'
 				},
 				{
 					icon: Git,
-					why_this:
-						'Distributed version control, team collaboration tracking, and codebase management.'
+					name: 'Git',
+					why_this: 'Distributed version control, team collaboration tracking, and codebase management.'
 				},
 				{
 					icon: LinuxTux,
-					why_this:
-						'Primary operating system environment, custom kernel logic, and systems control.'
+					name: 'Linux',
+					why_this: 'Primary operating system environment, custom kernel logic, and systems control.'
 				},
 				{
 					icon: Fedora,
+					name: 'Fedora',
 					why_this: 'Cutting-edge packages, stability, and minimalist ricing configurations.'
 				},
 				{
 					icon: LinuxTux,
-					why_this:
-						'Modern display protocol layer powering fluid workspace rendering and window rules.'
+					name: 'Wayland',
+					why_this: 'Modern display protocol layer powering fluid workspace rendering and window rules.'
 				}
 			]
 		}
@@ -141,15 +150,22 @@
 
 	<!-- Content -->
 	<div class="z-100 flex h-screen w-screen items-center justify-center px-20 py-10 pt-16">
-		<div class="grid h-full w-full grid-cols-3 gap-5 backdrop-blur-md">
+		<div class="grid h-full w-full grid-cols-3 gap-5">
 			{#each skill_data as skill}
 				<div class="flex h-full w-full flex-col items-center justify-start text-3xl">
 					<div class="p-6 font-stroke-display text-accent">{skill.name}</div>
 					<div class="grid w-full grid-cols-2 gap-5">
 						{#each skill.items as item}
-							<div class="flex w-full items-center justify-center text-accent">
+							<div
+								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300"
+							>
 								{#if browser}
-									<svelte:component this={item.icon} size={70} />
+									<svelte:component
+										this={item.icon}
+										size={70}
+										class="transition-all duration-300 group-hover:scale-105 group-hover:text-accent"
+									/>
+									<span class="text-sm">{item.name}</span>
 								{/if}
 							</div>
 						{/each}
