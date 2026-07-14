@@ -1,20 +1,3 @@
-import {
-  Rust,
-  CPlusplus,
-  Kotlin,
-  Go,
-  Javascript,
-  Python,
-  Lua,
-  Bash,
-  _React,
-  SvelteIcon,
-  Neovim,
-  Git,
-  LinuxTux,
-  Fedora,
-  Android
-} from '@dev.icons/svelte/mono';
 
 export const portfolioData = {
   personal: {

@@ -136,24 +136,23 @@
 <section
 	bind:this={sectionEl}
 	id="skills"
-	class="relative flex min-h-screen w-full items-center overflow-hidden bg-bg-main"
+	class="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-bg-main md:flex-row"
 >
 	<!-- Rotated SKILLS title -->
 	<div
-		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
-		       justify-center px-4"
+		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:pt-0 md:px-4"
 	>
-		<div class="-rotate-90 whitespace-nowrap">
-			<GrainyText text="SKILLS" size="8xl text-[7rem] font-stroke-display" id="skills" />
+		<div class="whitespace-nowrap md:-rotate-90">
+			<GrainyText text="SKILLS" size="text-[5rem] md:text-[7rem] font-stroke-display" id="skills" />
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="z-100 flex h-screen w-screen items-center justify-center px-20 py-10 pt-16">
-		<div class="grid h-full w-full grid-cols-3 gap-5">
+	<div class="z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pb-20 pt-10 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16">
+		<div class="grid h-full w-full grid-cols-1 gap-10 md:grid-cols-3 md:gap-5 md:pl-32 lg:pl-40 pr-6 md:pr-20">
 			{#each skill_data as skill}
 				<div class="flex h-full w-full flex-col items-center justify-start text-3xl">
-					<div class="p-6 font-stroke-display text-accent">{skill.name}</div>
+					<div class="p-4 font-stroke-display text-2xl text-accent md:p-6 md:text-3xl">{skill.name}</div>
 					<div class="grid w-full grid-cols-2 gap-5">
 						{#each skill.items as item}
 							<div

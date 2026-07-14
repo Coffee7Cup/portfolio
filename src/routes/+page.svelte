@@ -15,7 +15,7 @@
 	<div
 		bind:this={threeDimContainer}
 		id="3d-container"
-		class="pointer-events-none absolute inset-0 z-20 max-w-full overflow-hidden bg-transparent"
+		class="pointer-events-none absolute inset-0 z-20 max-w-screen overflow-hidden bg-transparent"
 	>
 		<Tee />
 	</div>

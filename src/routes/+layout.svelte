@@ -182,14 +182,14 @@
 {#if isLoaded}
 	<!-- Floating Nav Bar -->
 	<header
-		class="fixed top-5 left-1/2 z-1000 flex -translate-x-1/2 items-center gap-6 rounded-full border border-text-main/10 bg-bg-main/70 px-6 py-3 backdrop-blur-md transition-all duration-300 md:gap-8 md:px-8"
+		class="fixed top-4 left-1/2 z-1000 flex w-[95%] max-w-max -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-2 backdrop-blur-md transition-all duration-300 md:top-5 md:w-auto md:justify-center md:gap-8 md:px-8 md:py-3"
 	>
-		<nav class="flex items-center gap-4 md:gap-6">
+		<nav class="flex items-center gap-3 sm:gap-4 md:gap-6">
 			{#each navItems as item}
 				<a
 					href="#{item.id}"
 					onclick={(e) => handleNavClick(e, item.id)}
-					class="font-stroke-clean text-xs font-bold tracking-wider uppercase transition-colors duration-300 md:text-sm {activeSection ===
+					class="font-stroke-clean text-[9px] font-bold tracking-wider uppercase transition-colors duration-300 sm:text-xs md:text-sm {activeSection ===
 					item.id
 						? 'text-accent'
 						: 'text-text-sub hover:text-text-main'}"
@@ -199,7 +199,7 @@
 			{/each}
 		</nav>
 
-		<div class="h-4 w-[1px] bg-text-main/15"></div>
+		<div class="h-4 w-[1px] bg-text-main/15 shrink-0"></div>
 
 		<!-- Theme Toggle Button -->
 		<button

@@ -5,41 +5,55 @@
 </script>
 
 <div class="pointer-events-none relative inset-0 z-10 h-screen w-screen">
-	<div class="absolute bottom-0 left-0 -translate-x-105 translate-y-120">
+	<div
+		class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 scale-70 md:-translate-x-105 md:translate-y-120 md:scale-100"
+	>
 		{@render radial_gradient_circle()}
 	</div>
-	<div class="absolute top-0 right-0 translate-x-120 -translate-y-120">
+	<div
+		class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 scale-70 md:translate-x-120 md:-translate-y-120 md:scale-100"
+	>
 		{@render radial_gradient_circle()}
 	</div>
 </div>
 
-<div class="p-4">
+<div class="overflow-hidden p-4">
 	<div class="pointer-events-none absolute inset-0 z-10 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">Hey,</div>
-			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
+			<div
+				class="scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold md:text-[10rem]"
+			>
+				Hey,
+			</div>
+			<div
+				class="scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold sm:text-6xl md:text-[10rem]"
+			>
 				I'm {personal.name}
 			</div>
 		</div>
 
 		<div
-			class="absolute bottom-0 left-0 flex h-190 w-190 -translate-x-60 translate-y-60 items-center justify-center"
+			class="absolute bottom-0 left-0 flex h-96 w-96 -translate-x-1/2 translate-y-1/2 items-center justify-center md:h-190 md:w-190 md:-translate-x-60 md:translate-y-60"
 		>
-			<div class="h-100 w-100 rounded-full bg-accent"></div>
+			<div class="h-48 w-48 rounded-full bg-accent md:h-100 md:w-100"></div>
 		</div>
 		<div
-			class="absolute top-0 right-0 flex h-190 w-190 translate-x-70 -translate-y-70 items-center justify-center"
+			class="absolute top-0 right-0 flex h-96 w-96 translate-x-1/2 -translate-y-1/2 items-center justify-center md:h-190 md:w-190 md:translate-x-70 md:-translate-y-70"
 		>
-			<div class="h-100 w-100 rounded-full bg-accent"></div>
+			<div class="h-48 w-48 rounded-full bg-accent md:h-100 md:w-100"></div>
 		</div>
 	</div>
 
 	<div class="pointer-events-none absolute inset-0 z-30 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
+			<div
+				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold md:text-[10rem]"
+			>
 				Hey,
 			</div>
-			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[10rem] font-extrabold">
+			<div
+				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold sm:text-6xl md:text-[10rem]"
+			>
 				I'm {personal.name}
 			</div>
 		</div>
@@ -80,8 +94,14 @@
 
 	:global(.text-stroke) {
 		color: transparent;
-		-webkit-text-stroke: 4px var(--text-main, #ffffff);
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		-webkit-text-stroke: 1px var(--text-main, #ffffff);
+	}
+
+	@media (min-width: 1024px) {
+		:global(.text-stroke) {
+			-webkit-text-stroke: 2px var(--text-main, #ffffff);
+		}
 	}
 </style>

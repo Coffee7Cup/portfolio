@@ -112,28 +112,35 @@
 <section
 	bind:this={sectionEl}
 	id="projects"
-	class="relative flex min-h-screen w-full items-center overflow-hidden bg-bg-main"
+	class="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-bg-main md:flex-row"
 >
 	<!-- Rotated PROJECTS title -->
 	<div
-		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
-		       justify-center px-4"
+		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
-		<div class="-rotate-90 whitespace-nowrap">
-			<GrainyText text="PROJECTS" size="text-[7rem] font-stroke-display" id="project" />
+		<div class="whitespace-nowrap md:-rotate-90">
+			<GrainyText
+				text="PROJECTS"
+				size="text-[3.5rem] md:text-[7rem] font-stroke-display"
+				id="project"
+			/>
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="z-10 flex h-screen w-screen items-center justify-center p-20">
-		<div class="relative w-full">
+	<div
+		class="z-10 flex min-h-screen w-full flex-1 flex-col items-center justify-start p-2 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-0"
+	>
+		<div
+			class="flex w-full flex-col items-center gap-0 md:flex-row md:items-stretch md:pr-10 md:pl-32 lg:pr-5 lg:pl-30"
+		>
 			<!-- image frame -->
-			<div class="relative aspect-video w-full overflow-hidden rounded-md bg-neutral-950">
+			<div class="relative aspect-video w-full overflow-hidden rounded-md bg-neutral-950 md:w-4/5">
 				<img
 					bind:this={imgEl}
 					src={projects[0].img}
 					alt={projects[0].title}
-					class="absolute inset-0 h-full w-full object-contain p-6"
+					class="absolute inset-0 h-full w-full object-contain"
 				/>
 
 				<!-- reveal panels -->
@@ -141,32 +148,33 @@
 					class="pointer-events-none absolute inset-0 grid"
 					style="grid-template-rows: repeat({ROWS}, 1fr); grid-template-columns: 1fr;"
 				>
-					{#each cells as _, i}
+					{#each cells as _, i (i)}
 						<div bind:this={panelEls[i]} class="w-full origin-bottom bg-bg-main"></div>
 					{/each}
 				</div>
-				<!-- description, bottom-right, overlapping the frame -->
-				<div
-					class="absolute right-0 bottom-0 z-20 m-10 max-w-150 rounded-md bg-bg-main/40 p-10 backdrop-blur-sm"
-				>
-					<h3 bind:this={titleEl} class="mb-1 text-xl font-bold">
-						{projects[currentIndex].title}
-					</h3>
-					<p bind:this={descEl} class="text-sm leading-relaxed opacity-80">
-						{projects[currentIndex].desc}
-					</p>
-					{#if projects[currentIndex].tags}
-						<div class="mt-4 flex flex-wrap gap-2">
-							{#each projects[currentIndex].tags as tag (tag)}
-								<span
-									class="dark:text-accent-light rounded-md bg-accent/20 px-2.5 py-1 font-main text-xs font-semibold text-accent dark:bg-accent/30"
-								>
-									{tag}
-								</span>
-							{/each}
-						</div>
-					{/if}
-				</div>
+			</div>
+
+			<!-- description -->
+			<div
+				class="z-20 flex w-full flex-col justify-center rounded-md bg-bg-main/40 p-6 pt-20 backdrop-blur-sm md:w-1/3 md:p-10"
+			>
+				<h3 bind:this={titleEl} class="mb-2 text-xl font-bold md:text-2xl">
+					{projects[currentIndex].title}
+				</h3>
+				<p bind:this={descEl} class="text-sm leading-relaxed opacity-80 md:text-base">
+					{projects[currentIndex].desc}
+				</p>
+				{#if projects[currentIndex].tags}
+					<div class="mt-6 flex flex-wrap gap-2">
+						{#each projects[currentIndex].tags as tag (tag)}
+							<span
+								class="dark:text-accent-light rounded-md bg-accent/20 px-2.5 py-1 font-main text-xs font-semibold text-accent dark:bg-accent/30"
+							>
+								{tag}
+							</span>
+						{/each}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>

@@ -60,30 +60,29 @@
 <section
 	bind:this={sectionEl}
 	id="about"
-	class="relative flex min-h-screen w-screen flex-row items-center bg-bg-main"
+	class="relative flex min-h-screen w-full flex-col items-center bg-bg-main md:flex-row"
 >
 	<div
-		class="pointer-events-none z-30 flex h-full w-20 shrink-0 translate-x-10 items-center
-		       justify-center px-4"
+		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:pt-0 md:px-4"
 	>
-		<div class="-rotate-90 whitespace-nowrap">
-			<GrainyText text="ABOUT" size=" text-[7rem] font-stroke-display" id="about" />
+		<div class="whitespace-nowrap md:-rotate-90">
+			<GrainyText text="ABOUT" size="text-[5rem] md:text-[7rem] font-stroke-display" id="about" />
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="relative z-20 h-screen w-screen">
-		<div class="mt-52 flex-1 flex-col pl-32">
+	<div class="z-20 flex w-full flex-1 flex-col justify-center px-6 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:px-0">
+		<div class="flex-1 flex-col md:mt-52 md:pl-32 lg:pl-40">
 			<div class="w-full max-w-2xl">
-				<p class="about-bio font-main text-xl leading-relaxed font-medium text-text-main">
+				<p class="about-bio font-main text-base leading-relaxed font-medium text-text-main md:text-xl">
 					{bio}
 				</p>
 				<h3
-					class="about-subheading mt-10 mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl lg:text-3xl"
+					class="about-subheading mt-8 mb-6 font-stroke-display text-xl font-extrabold text-accent md:mt-10 md:text-2xl lg:text-3xl"
 				>
 					What I'm Good at.
 				</h3>
-				<div class="flex flex-wrap gap-3">
+				<div class="flex flex-wrap gap-2 md:gap-3">
 					{#each skills as skill}
 						<div class="about-pill">
 							<SkillPill label={skill} />
