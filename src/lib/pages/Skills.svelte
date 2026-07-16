@@ -1,5 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -31,12 +30,14 @@
 				{
 					icon: Rust,
 					name: 'Rust',
-					why_this: 'Systems programming, concurrency safety, and building performant TUI applications.'
+					why_this:
+						'Systems programming, concurrency safety, and building performant TUI applications.'
 				},
 				{
 					icon: CPlusplus,
 					name: 'C++',
-					why_this: 'Low-level control, algorithms, raw sockets, and advanced network implementations.'
+					why_this:
+						'Low-level control, algorithms, raw sockets, and advanced network implementations.'
 				},
 				{
 					icon: Kotlin,
@@ -46,7 +47,8 @@
 				{
 					icon: Go,
 					name: 'Go',
-					why_this: 'Fast compilation, clean syntax, and building high-performance networking tools.'
+					why_this:
+						'Fast compilation, clean syntax, and building high-performance networking tools.'
 				},
 				{
 					icon: Javascript,
@@ -81,7 +83,8 @@
 				{
 					icon: SvelteIcon,
 					name: 'SvelteKit',
-					why_this: 'Routing, state management, and handling animations cleanly on full-stack web platforms.'
+					why_this:
+						'Routing, state management, and handling animations cleanly on full-stack web platforms.'
 				},
 				{
 					icon: _React,
@@ -96,7 +99,8 @@
 				{
 					icon: Rust,
 					name: 'Iced.rs',
-					why_this: 'Crafting lightweight, cross-platform native desktop GUI architectures in pure Rust.'
+					why_this:
+						'Crafting lightweight, cross-platform native desktop GUI architectures in pure Rust.'
 				}
 			]
 		},
@@ -106,17 +110,20 @@
 				{
 					icon: Neovim,
 					name: 'Neovim',
-					why_this: 'Blazing fast, keyboard-driven development workflows and fully personalized IDE optimization.'
+					why_this:
+						'Blazing fast, keyboard-driven development workflows and fully personalized IDE optimization.'
 				},
 				{
 					icon: Git,
 					name: 'Git',
-					why_this: 'Distributed version control, team collaboration tracking, and codebase management.'
+					why_this:
+						'Distributed version control, team collaboration tracking, and codebase management.'
 				},
 				{
 					icon: LinuxTux,
 					name: 'Linux',
-					why_this: 'Primary operating system environment, custom kernel logic, and systems control.'
+					why_this:
+						'Primary operating system environment, custom kernel logic, and systems control.'
 				},
 				{
 					icon: Fedora,
@@ -126,7 +133,8 @@
 				{
 					icon: LinuxTux,
 					name: 'Wayland',
-					why_this: 'Modern display protocol layer powering fluid workspace rendering and window rules.'
+					why_this:
+						'Modern display protocol layer powering fluid workspace rendering and window rules.'
 				}
 			]
 		}
@@ -140,7 +148,7 @@
 >
 	<!-- Rotated SKILLS title -->
 	<div
-		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:pt-0 md:px-4"
+		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
 		<div class="whitespace-nowrap md:-rotate-90">
 			<GrainyText text="SKILLS" size="text-[5rem] md:text-[7rem] font-stroke-display" id="skills" />
@@ -148,13 +156,19 @@
 	</div>
 
 	<!-- Content -->
-	<div class="z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pb-20 pt-10 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16">
-		<div class="grid h-full w-full grid-cols-1 gap-10 md:grid-cols-3 md:gap-5 md:pl-32 lg:pl-40 pr-6 md:pr-20">
-			{#each skill_data as skill}
+	<div
+		class="z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
+	>
+		<div
+			class="grid h-full w-full grid-cols-1 gap-10 pr-6 md:grid-cols-3 md:gap-5 md:pr-20 md:pl-32 lg:pl-40"
+		>
+			{#each skill_data as skill (skill.name)}
 				<div class="flex h-full w-full flex-col items-center justify-start text-3xl">
-					<div class="p-4 font-stroke-display text-2xl text-accent md:p-6 md:text-3xl">{skill.name}</div>
+					<div class="p-4 font-stroke-display text-2xl text-accent md:p-6 md:text-3xl">
+						{skill.name}
+					</div>
 					<div class="grid w-full grid-cols-2 gap-5">
-						{#each skill.items as item}
+						{#each skill.items as item (item.name)}
 							<div
 								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300"
 							>
@@ -174,3 +188,4 @@
 		</div>
 	</div>
 </section>
+

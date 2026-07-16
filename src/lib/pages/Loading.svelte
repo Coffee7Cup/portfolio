@@ -1,4 +1,5 @@
 <script>
+	import fav from '$lib/assets/favicon.svg';
 	let { progress = 0, status = 'Initializing...' } = $props();
 
 	const bootLines = [
@@ -22,14 +23,17 @@
 <div class="loader-overlay fixed inset-0 z-9999 flex flex-col bg-black font-mono text-white">
 	<!-- top wordmark -->
 	<div class="flex items-center justify-between border-b border-white/10 px-8 py-5">
-		<span class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">System</span>
-		<span class="text-xs tracking-[0.3em] text-white/30 uppercase">tty1</span>
+		<span class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
+			<img src={fav} alt="favicon" class="h-10" />
+		</span>
+		<span class="text-xs tracking-[0.3em] text-white/30 uppercase">Portfolio</span>
 	</div>
 
 	<!-- scrolling boot log -->
 	<div class="flex flex-1 flex-col justify-end overflow-hidden px-8 py-8">
+		<img src={fav} alt="favicon" class="max-w-2xl" />
 		<div class="mx-auto w-full max-w-2xl">
-			{#each visibleLines as line, i}
+			{#each visibleLines as line, i (i)}
 				<div class="text-[13px] leading-relaxed text-white/60">
 					<span class="text-white/30">[{(i * 0.612).toFixed(6)}]</span>
 					{line}
@@ -72,3 +76,4 @@
 		}
 	}
 </style>
+

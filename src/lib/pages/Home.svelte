@@ -20,14 +20,8 @@
 <div class="overflow-hidden p-4">
 	<div class="pointer-events-none absolute inset-0 z-10 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div
-				class="scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold md:text-[10rem]"
-			>
-				Hey,
-			</div>
-			<div
-				class="scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold sm:text-6xl md:text-[10rem]"
-			>
+			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[2rem] md:text-[8rem]">Hey,</div>
+			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[2rem] sm:text-6xl md:text-[8rem]">
 				I'm {personal.name}
 			</div>
 		</div>
@@ -46,13 +40,11 @@
 
 	<div class="pointer-events-none absolute inset-0 z-30 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div
-				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold md:text-[10rem]"
-			>
+			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2rem] md:text-[8rem]">
 				Hey,
 			</div>
 			<div
-				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2.5rem] font-extrabold sm:text-6xl md:text-[10rem]"
+				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2rem] sm:text-6xl md:text-[8rem]"
 			>
 				I'm {personal.name}
 			</div>
@@ -96,7 +88,7 @@
 		color: transparent;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		-webkit-text-stroke: 1px var(--text-main, #ffffff);
+		-webkit-text-stroke: 0.5px var(--text-main, #ffffff);
 	}
 
 	@media (min-width: 1024px) {

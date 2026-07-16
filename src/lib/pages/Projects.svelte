@@ -26,34 +26,14 @@
 	let descEl = $state(null);
 	let imgEl = $state(null);
 	let panelEls = $state([]);
-	let currentIndex = $state(0);
+	let currentIndex = $state({
+		ind: 0
+	});
 
 	onMount(() => {
 		// scaleY controls the height of each row block
-		gsap.set(panelEls, { scaleY: 1 });
-		gsap.set(imgEl, { scale: 1.08, opacity: 0 });
-
-		// Intro Reveal (Top to Bottom)
-		const introTl = gsap.timeline({ delay: 0.2 });
-		introTl
-			.to(imgEl, { opacity: 1, duration: 0.4 })
-			.to(
-				panelEls,
-				{
-					scaleY: 0,
-					duration: 0.7,
-					ease: 'power4.inOut',
-					stagger: 0.05 // Staggers row by row sequentially
-				},
-				'<'
-			)
-			.to(imgEl, { scale: 1, duration: 1.1, ease: 'power3.out' }, '<')
-			.fromTo(
-				[titleEl, descEl],
-				{ opacity: 0, y: 16 },
-				{ opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-				'-=0.4'
-			);
+		gsap.set(panelEls, { scaleY: 0 });
+		gsap.set(imgEl, { scale: 1.08, opacity: 1 });
 
 		const tl = gsap.timeline({
 			scrollTrigger: {
@@ -83,10 +63,11 @@
 					},
 					'<'
 				)
+				.set(currentIndex, {
+					ind: i + 1
+				})
 				.set(imgEl, { attr: { src: projects[i + 1].img } })
-				.call(() => (currentIndex = i + 1))
 				.set(panelEls, { transformOrigin: 'top' })
-				// Reveal Image (Top to Bottom)
 				.to(imgEl, { opacity: 1, duration: 0.3 })
 				.to(
 					panelEls,
@@ -121,7 +102,7 @@
 		<div class="whitespace-nowrap md:-rotate-90">
 			<GrainyText
 				text="PROJECTS"
-				size="text-[3.5rem] md:text-[7rem] font-stroke-display"
+				size="text-[3rem] md:text-[7rem] font-stroke-display"
 				id="project"
 			/>
 		</div>
@@ -132,7 +113,7 @@
 		class="z-10 flex min-h-screen w-full flex-1 flex-col items-center justify-start p-2 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-0"
 	>
 		<div
-			class="flex w-full flex-col items-center gap-0 md:flex-row md:items-stretch md:pr-10 md:pl-32 lg:pr-5 lg:pl-30"
+			class="flex w-full flex-col items-center gap-0 md:flex-row md:items-stretch md:pr-10 md:pl-32 lg:pr-5 lg:pl-40"
 		>
 			<!-- image frame -->
 			<div class="relative aspect-video w-full overflow-hidden rounded-md bg-neutral-950 md:w-4/5">
@@ -159,14 +140,14 @@
 				class="z-20 flex w-full flex-col justify-center rounded-md bg-bg-main/40 p-6 pt-20 backdrop-blur-sm md:w-1/3 md:p-10"
 			>
 				<h3 bind:this={titleEl} class="mb-2 text-xl font-bold md:text-2xl">
-					{projects[currentIndex].title}
+					{projects[currentIndex.ind].title}
 				</h3>
 				<p bind:this={descEl} class="text-sm leading-relaxed opacity-80 md:text-base">
-					{projects[currentIndex].desc}
+					{projects[currentIndex.ind].desc}
 				</p>
-				{#if projects[currentIndex].tags}
+				{#if projects[currentIndex.ind].tags}
 					<div class="mt-6 flex flex-wrap gap-2">
-						{#each projects[currentIndex].tags as tag (tag)}
+						{#each projects[currentIndex.ind].tags as tag (tag)}
 							<span
 								class="dark:text-accent-light rounded-md bg-accent/20 px-2.5 py-1 font-main text-xs font-semibold text-accent dark:bg-accent/30"
 							>

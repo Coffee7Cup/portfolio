@@ -3,25 +3,33 @@
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { Github, GithubIcon, Linkerd, Twitter } from '@dev.icons/svelte/mono';
+	import { GithubIcon, Linkerd, Twitter } from '@dev.icons/svelte/mono';
 	import { browser } from '$app/environment';
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state();
 	let formStatus = $state('');
+	let name = $state('');
+	let message = $state('');
 
 	const portfolio = getContext('portfolio');
 	const personal = portfolio.personal;
 
 	function handleSubmit(e) {
 		e.preventDefault();
+
 		formStatus = 'sending';
+
+		const subject = encodeURIComponent('Portfolio Inquiry');
+		const body = encodeURIComponent(`Hi, I'm ${name},\n\n${message}`);
+
+		window.location.href = `mailto:maddysai9848@gmail.com?subject=${subject}&body=${body}`;
+
 		setTimeout(() => {
 			formStatus = 'success';
-		}, 1000);
+		}, 800);
 	}
-
 	onMount(() => {
 		const ctx = gsap.context(() => {
 			gsap.from('.contact-form-container', {
@@ -66,7 +74,7 @@
 		<div class="whitespace-nowrap md:-rotate-90">
 			<GrainyText
 				text="CONTACT"
-				size="text-[3.5rem] md:text-[7rem] font-stroke-display"
+				size="text-[3rem] md:text-[7rem] font-stroke-display"
 				id="contact"
 			/>
 		</div>
@@ -187,28 +195,14 @@
 						>
 							Name
 						</label>
+
 						<input
 							type="text"
+							bind:value={name}
 							id="name"
 							required
 							placeholder="Your name"
-							class="w-full rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)]"
-						/>
-					</div>
-
-					<div>
-						<label
-							for="email"
-							class="mb-2 block font-main text-xs font-semibold tracking-wider text-text-sub uppercase"
-						>
-							Email Address
-						</label>
-						<input
-							type="email"
-							id="email"
-							required
-							placeholder="you@example.com"
-							class="w-full rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)]"
+							class="w-full appearance-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)]"
 						/>
 					</div>
 
@@ -222,12 +216,12 @@
 						<textarea
 							id="message"
 							required
+							bind:value={message}
 							rows="4"
 							placeholder="What are we building?"
-							class="w-full resize-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)]"
+							class="w-full resize-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)] focus:outline-none"
 						></textarea>
 					</div>
-
 					<button
 						type="submit"
 						disabled={formStatus === 'sending' || formStatus === 'success'}

@@ -86,6 +86,8 @@
 		await Promise.all(promises);
 	}
 
+	let isDark = $state(false);
+
 	async function startLoading() {
 		try {
 			// 1. Load GLB
@@ -93,7 +95,9 @@
 
 			// 2. Load images
 			const imageUrls = portfolioData.projects.map((p) =>
-				p.img.startsWith('http') || p.img.startsWith(base) ? p.img : `${base}/${p.img.replace(/^\//, '')}`
+				p.img.startsWith('http') || p.img.startsWith(base)
+					? p.img
+					: `${base}/${p.img.replace(/^\//, '')}`
 			);
 			await preloadImages(imageUrls);
 
@@ -123,7 +127,6 @@
 					});
 				}, 100);
 			}, 400);
-
 		} catch (err) {
 			console.error(err);
 			// Fallback to load website anyway
@@ -136,6 +139,7 @@
 		// Toggle dark class on load if preferred
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
 			document.documentElement.classList.add('dark');
+			isDark = true;
 		}
 
 		startLoading();
@@ -182,14 +186,14 @@
 {#if isLoaded}
 	<!-- Floating Nav Bar -->
 	<header
-		class="fixed top-4 left-1/2 z-1000 flex w-[95%] max-w-max -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-2 backdrop-blur-md transition-all duration-300 md:top-5 md:w-auto md:justify-center md:gap-8 md:px-8 md:py-3"
+		class="fixed top-4 left-1/2 z-1000 flex w-[95%] max-w-max -translate-x-1/2 items-center justify-between gap-1 rounded-full border border-text-main/10 bg-bg-main/70 px-2 py-2 backdrop-blur-md transition-all duration-300 md:top-5 md:w-auto md:justify-center md:gap-8 md:px-8 md:py-3"
 	>
-		<nav class="flex items-center gap-3 sm:gap-4 md:gap-6">
-			{#each navItems as item}
+		<nav class="flex items-center gap-3 sm:gap-0.5 md:gap-6">
+			{#each navItems as item (item)}
 				<a
 					href="#{item.id}"
 					onclick={(e) => handleNavClick(e, item.id)}
-					class="font-stroke-clean text-[9px] font-bold tracking-wider uppercase transition-colors duration-300 sm:text-xs md:text-sm {activeSection ===
+					class="font-stroke-display text-[9px] tracking-wider uppercase transition-colors duration-300 sm:text-xs md:text-sm {activeSection ===
 					item.id
 						? 'text-accent'
 						: 'text-text-sub hover:text-text-main'}"
@@ -199,42 +203,47 @@
 			{/each}
 		</nav>
 
-		<div class="h-4 w-[1px] bg-text-main/15 shrink-0"></div>
-
 		<!-- Theme Toggle Button -->
 		<button
-			onclick={() => document.documentElement.classList.toggle('dark')}
+			onclick={() => {
+				document.documentElement.classList.toggle('dark');
+				isDark = document.documentElement.classList.contains('dark');
+				console.log(isDark);
+			}}
 			class="group flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-text-main/10 bg-transparent text-text-sub transition-all duration-300 hover:border-accent hover:text-accent"
 			aria-label="Toggle Theme"
 		>
+			{#if isDark}
+				<svg
+					class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"
+					/>
+				</svg>
+			{:else}
+				<svg
+					class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+					/>
+				</svg>
+			{/if}
 			<!-- Sun icon (visible in dark mode) -->
-			<svg
-				class="hidden h-4 w-4 transition-transform duration-300 group-hover:scale-110 dark:block"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				viewBox="0 0 24 24"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"
-				/>
-			</svg>
 			<!-- Moon icon (visible in light mode) -->
-			<svg
-				class="block h-4 w-4 transition-transform duration-300 group-hover:scale-110 dark:hidden"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				viewBox="0 0 24 24"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-				/>
-			</svg>
 		</button>
 	</header>
 
