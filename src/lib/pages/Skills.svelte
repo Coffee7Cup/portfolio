@@ -151,13 +151,13 @@
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
 		<div class="whitespace-nowrap md:-rotate-90">
-			<GrainyText text="SKILLS" size="text-[5rem] md:text-[7rem] font-stroke-display" id="skills" />
+			<GrainyText text="SKILLS" size="text-[3rem] md:text-[7rem] font-stroke-display" id="skills" />
 		</div>
 	</div>
 
 	<!-- Content -->
 	<div
-		class="z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
+		class="bg-re z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
 	>
 		<div
 			class="grid h-full w-full grid-cols-1 gap-10 pr-6 md:grid-cols-3 md:gap-5 md:pr-20 md:pl-32 lg:pl-40"
@@ -188,4 +188,3 @@
 		</div>
 	</div>
 </section>
-

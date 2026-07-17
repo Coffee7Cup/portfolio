@@ -5,6 +5,7 @@
 	import Projects from '$lib/pages/Projects.svelte';
 	import Contact from '$lib/pages/Contact.svelte';
 	import Tee from '$lib/three.svelte';
+	import Certificates from '$lib/pages/Certificates.svelte';
 
 	let threeDimContainer = $state();
 </script>
@@ -30,6 +31,8 @@
 	<Skills />
 
 	<Projects />
+
+	<Certificates />
 
 	<Contact />
 </div>

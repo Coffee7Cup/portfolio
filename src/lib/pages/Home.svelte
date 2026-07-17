@@ -20,8 +20,10 @@
 <div class="overflow-hidden p-4">
 	<div class="pointer-events-none absolute inset-0 z-10 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[2rem] md:text-[8rem]">Hey,</div>
-			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[2rem] sm:text-6xl md:text-[8rem]">
+			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] md:text-[7rem]">Hey,</div>
+			<div
+				class="scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] sm:text-6xl md:text-[7rem]"
+			>
 				I'm {personal.name}
 			</div>
 		</div>
@@ -40,11 +42,13 @@
 
 	<div class="pointer-events-none absolute inset-0 z-30 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2rem] md:text-[8rem]">
+			<div
+				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] md:text-[7rem]"
+			>
 				Hey,
 			</div>
 			<div
-				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[2rem] sm:text-6xl md:text-[8rem]"
+				class="text-stroke scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] sm:text-6xl md:text-[7rem]"
 			>
 				I'm {personal.name}
 			</div>

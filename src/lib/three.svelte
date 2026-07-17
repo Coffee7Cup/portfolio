@@ -71,7 +71,7 @@
 			const scale = Math.min(1, width / 900);
 			model.scale.set(scale, scale, scale);
 		};
-
+		//WARN: i guess i can store the parces glb file, but im not unmounting it anyways so i guess its fine
 		const loader = new GLTFLoader();
 		loader.load(`${base}/prop.glb`, (gltf) => {
 			model = gltf.scene;

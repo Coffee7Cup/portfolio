@@ -18,6 +18,7 @@
 		{ id: 'about', label: 'About' },
 		{ id: 'skills', label: 'Skills' },
 		{ id: 'projects', label: 'Projects' },
+		{ id: 'certificates', label: 'Certificates' },
 		{ id: 'contact', label: 'Contact' }
 	];
 
@@ -88,17 +89,26 @@
 
 	let isDark = $state(false);
 
+	// WARN: im assuming that the browser will cache this files, so when i fetch them again in Projects.svelte they are in cache.
+	// TODO: see if imgs are cached or not
 	async function startLoading() {
 		try {
 			// 1. Load GLB
 			await preloadGLB(`${base}/prop.glb`);
 
 			// 2. Load images
-			const imageUrls = portfolioData.projects.map((p) =>
+			let imageUrls = portfolioData.projects.map((p) =>
 				p.img.startsWith('http') || p.img.startsWith(base)
 					? p.img
 					: `${base}/${p.img.replace(/^\//, '')}`
 			);
+
+			let certUrls = portfolioData.certificates.map((c) =>
+				c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
+			);
+
+			imageUrls = [...imageUrls, ...certUrls];
+
 			await preloadImages(imageUrls);
 
 			// 3. Wait for fonts
@@ -144,7 +154,32 @@
 
 		startLoading();
 	});
+	let expanded = $state(false);
 
+	function currentIndex() {
+		return navItems.findIndex((i) => i.id === activeSection);
+	}
+
+	function scrollToId(id) {
+		document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+		activeSection = id;
+		expanded = false;
+	}
+
+	function goPrev() {
+		const idx = currentIndex();
+		scrollToId(navItems[(idx - 1 + navItems.length) % navItems.length].id);
+	}
+
+	function goNext() {
+		const idx = currentIndex();
+		scrollToId(navItems[(idx + 1) % navItems.length].id);
+	}
+
+	function toggleTheme() {
+		document.documentElement.classList.toggle('dark');
+		isDark = document.documentElement.classList.contains('dark');
+	}
 	$effect(() => {
 		if (!isLoaded) return;
 
@@ -186,65 +221,114 @@
 {#if isLoaded}
 	<!-- Floating Nav Bar -->
 	<header
-		class="fixed top-4 left-1/2 z-1000 flex w-[95%] max-w-max -translate-x-1/2 items-center justify-between gap-1 rounded-full border border-text-main/10 bg-bg-main/70 px-2 py-2 backdrop-blur-md transition-all duration-300 md:top-5 md:w-auto md:justify-center md:gap-8 md:px-8 md:py-3"
+		class="fixed bottom-4 left-1/2 z-1000 -translate-x-1/2 transition-all duration-300 md:top-5"
 	>
-		<nav class="flex items-center gap-3 sm:gap-0.5 md:gap-6">
-			{#each navItems as item (item)}
-				<a
-					href="#{item.id}"
-					onclick={(e) => handleNavClick(e, item.id)}
-					class="font-stroke-display text-[9px] tracking-wider uppercase transition-colors duration-300 sm:text-xs md:text-sm {activeSection ===
-					item.id
-						? 'text-accent'
-						: 'text-text-sub hover:text-text-main'}"
-				>
-					{item.label}
-				</a>
-			{/each}
-		</nav>
-
-		<!-- Theme Toggle Button -->
-		<button
-			onclick={() => {
-				document.documentElement.classList.toggle('dark');
-				isDark = document.documentElement.classList.contains('dark');
-				console.log(isDark);
-			}}
-			class="group flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-text-main/10 bg-transparent text-text-sub transition-all duration-300 hover:border-accent hover:text-accent"
-			aria-label="Toggle Theme"
+		<div
+			class="flex items-center justify-center gap-4 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-4 backdrop-blur-sm transition-all duration-300 md:min-w-[30vw] md:px-6 md:py-5"
 		>
-			{#if isDark}
+			<!-- Prev -->
+			<button
+				onclick={goPrev}
+				aria-label="Previous section"
+				class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-sub transition-colors duration-200 hover:text-accent"
+			>
 				<svg
-					class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"
+					class="h-3.5 w-3.5"
 					fill="none"
 					stroke="currentColor"
 					stroke-width="2"
 					viewBox="0 0 24 24"
 				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"
-					/>
+					<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
 				</svg>
-			{:else}
+			</button>
+
+			<!-- Center: current label / expanded list -->
+			<div class="relative flex items-center justify-center">
+				{#if !expanded}
+					<button
+						onclick={() => (expanded = true)}
+						class="text-md min-w-[64px] cursor-pointer text-center font-stroke-display tracking-wider text-accent uppercase transition-colors duration-300 sm:text-sm"
+					>
+						{navItems.find((i) => i.id === activeSection)?.label ?? ''}
+					</button>
+				{:else}
+					<nav class="flex items-center gap-3 sm:gap-4 md:gap-5">
+						{#each navItems as item (item.id)}
+							<a
+								href="#{item.id}"
+								onclick={(e) => {
+									e.preventDefault();
+									scrollToId(item.id);
+								}}
+								class="font-stroke-display text-[9px] tracking-wider uppercase transition-colors duration-300 sm:text-xs {activeSection ===
+								item.id
+									? 'text-accent'
+									: 'text-text-sub hover:text-text-main'}"
+							>
+								{item.label}
+							</a>
+						{/each}
+					</nav>
+				{/if}
+			</div>
+
+			<!-- Next -->
+			<button
+				onclick={goNext}
+				aria-label="Next section"
+				class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-sub transition-colors duration-200 hover:text-accent"
+			>
 				<svg
-					class="h-4 w-4 transition-transform duration-300 group-hover:scale-110"
+					class="h-3.5 w-3.5"
 					fill="none"
 					stroke="currentColor"
 					stroke-width="2"
 					viewBox="0 0 24 24"
 				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-					/>
+					<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
 				</svg>
-			{/if}
-			<!-- Sun icon (visible in dark mode) -->
-			<!-- Moon icon (visible in light mode) -->
-		</button>
+			</button>
+
+			<div class="h-4 w-px bg-text-main/10"></div>
+
+			<!-- Theme toggle -->
+			<button
+				onclick={toggleTheme}
+				aria-label="Toggle Theme"
+				class="group flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-sub transition-all duration-300 hover:text-accent"
+			>
+				{#if isDark}
+					<svg
+						class="h-3.5 w-3.5 transition-transform duration-300 group-hover:scale-110"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"
+						/>
+					</svg>
+				{:else}
+					<svg
+						class="h-3.5 w-3.5 transition-transform duration-300 group-hover:scale-110"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+						/>
+					</svg>
+				{/if}
+			</button>
+		</div>
 	</header>
 
 	{@render children()}

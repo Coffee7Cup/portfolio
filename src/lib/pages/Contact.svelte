@@ -5,6 +5,7 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { GithubIcon, Linkerd, Twitter } from '@dev.icons/svelte/mono';
 	import { browser } from '$app/environment';
+	import linkedin from '$lib/assets/linkedin.svg';
 
 	gsap.registerPlugin(ScrollTrigger);
 
@@ -140,34 +141,34 @@
 							href={personal.github}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-text-main transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
+							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						>
 							{#if browser}
 								<GithubIcon size={20} />
 							{/if}
-							<span>GitHub</span>
+							<span class="text-text-main">GitHub</span>
 						</a>
 						<a
 							href={personal.linkedin}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-text-main transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
+							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						>
 							{#if browser}
-								<Linkerd size={20} />
+								<img src={linkedin} alt="linkedin" class="h-5 w-5 text-white" />
 							{/if}
-							<span>LinkedIn</span>
+							<span class="text-text-main">LinkedIn</span>
 						</a>
 						<a
 							href={personal.twitter}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-text-main transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
+							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						>
 							{#if browser}
 								<Twitter size={20} />
 							{/if}
-							<span>Twitter</span>
+							<span class="text-text-main">Twitter</span>
 						</a>
 					</div>
 				</div>
@@ -202,7 +203,7 @@
 							id="name"
 							required
 							placeholder="Your name"
-							class="w-full appearance-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)]"
+							class="w-full rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 outline-hidden transition-all duration-300 outline-none focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)] focus:ring-0 focus:ring-offset-0"
 						/>
 					</div>
 
@@ -219,7 +220,7 @@
 							bind:value={message}
 							rows="4"
 							placeholder="What are we building?"
-							class="w-full resize-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 transition-all duration-300 focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)] focus:outline-none"
+							class="w-full resize-none rounded-xl border border-text-main/15 bg-text-main/5 px-4 py-3 font-main text-sm text-text-main placeholder-text-sub/50 transition-all duration-300 outline-none focus:border-accent focus:bg-transparent focus:shadow-[0_0_15px_rgba(255,0,0,0.1)] focus:ring-0 focus:ring-offset-0 focus:outline-none"
 						></textarea>
 					</div>
 					<button

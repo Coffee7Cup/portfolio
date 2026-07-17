@@ -51,4 +51,5 @@ export const portfolioData = {
     //tags: ['Kotlin', 'Jetpack Compose', 'Android SDK Component']
     //}
   ],
+  certificates: ['/certificates/mittal-1.png', "certificates/devit.png"]
 };

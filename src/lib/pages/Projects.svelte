@@ -121,7 +121,7 @@
 					bind:this={imgEl}
 					src={projects[0].img}
 					alt={projects[0].title}
-					class="absolute inset-0 h-full w-full object-contain"
+					class="absolute inset-0 h-full w-full object-cover"
 				/>
 
 				<!-- reveal panels -->

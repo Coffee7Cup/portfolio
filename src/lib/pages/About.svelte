@@ -63,18 +63,22 @@
 	class="relative flex min-h-screen w-full flex-col items-center bg-bg-main md:flex-row"
 >
 	<div
-		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:pt-0 md:px-4"
+		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
 		<div class="whitespace-nowrap md:-rotate-90">
-			<GrainyText text="ABOUT" size="text-[5rem] md:text-[7rem] font-stroke-display" id="about" />
+			<GrainyText text="ABOUT" size="text-[3rem] md:text-[7rem] font-stroke-display" id="about" />
 		</div>
 	</div>
 
 	<!-- Content -->
-	<div class="z-20 flex w-full flex-1 flex-col justify-center px-6 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:px-0">
+	<div
+		class="z-20 flex w-full flex-1 flex-col justify-center px-6 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:px-0"
+	>
 		<div class="flex-1 flex-col md:mt-52 md:pl-32 lg:pl-40">
 			<div class="w-full max-w-2xl">
-				<p class="about-bio font-main text-base leading-relaxed font-medium text-text-main md:text-xl">
+				<p
+					class="about-bio font-main text-base leading-relaxed font-medium text-text-main md:text-xl"
+				>
 					{bio}
 				</p>
 				<h3
