@@ -1,9 +1,14 @@
 <script>
-	import { getContext, onMount } from 'svelte';
+	import { getContext } from 'svelte';
 	import { gsap } from 'gsap';
 	import GrainyText from '$lib/components/GrainyText.svelte';
+	import { base } from '$app/paths';
 
-	let certificates = getContext('portfolio').certificates;
+	let portfolioData = getContext('portfolio');
+
+	let certificates = portfolioData.certificates.map((c) =>
+		c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
+	);
 
 	let currentIndex = $state(0);
 	let sliderTrack = $state();
@@ -23,10 +28,7 @@
 	}
 </script>
 
-<section
-	id="certificates"
-	class="relative flex h-screen w-full flex-col overflow-hidden bg-bg-main md:flex-row"
->
+<section id="certificates" class="relative flex h-screen w-full flex-col bg-bg-main md:flex-row">
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-12 md:absolute md:left-0 md:h-full md:w-24 md:translate-x-10 md:px-4 md:pt-0"
 	>
@@ -57,14 +59,30 @@
 					class="text-main h text-main flex h-12 w-12 items-center justify-center rounded-2xl bg-accent backdrop-blur-md transition-all hover:scale-110 active:scale-95"
 					aria-label="Previous certificate"
 				>
-					←
+					<svg
+						class="h-4.5 w-4.5"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+					</svg>
 				</button>
 				<button
 					onclick={() => moveSlider('next')}
 					class="text-main h text-main flex h-12 w-12 items-center justify-center rounded-2xl bg-accent backdrop-blur-md transition-all hover:scale-110 active:scale-95"
 					aria-label="Next certificate"
 				>
-					→
+					<svg
+						class="h-4.5 w-4.5"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						viewBox="0 0 24 24"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+					</svg>
 				</button>
 			</div>
 

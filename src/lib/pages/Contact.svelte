@@ -159,17 +159,6 @@
 							{/if}
 							<span class="text-text-main">LinkedIn</span>
 						</a>
-						<a
-							href={personal.twitter}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
-						>
-							{#if browser}
-								<Twitter size={20} />
-							{/if}
-							<span class="text-text-main">Twitter</span>
-						</a>
 					</div>
 				</div>
 
@@ -177,7 +166,7 @@
 				<div class="mt-16 hidden border-t border-text-main/10 pt-6 md:block">
 					<p class="font-main text-xs text-text-sub">
 						&copy; {new Date().getFullYear()}
-						{personal.name}. Built with SvelteKit, GSAP, and Tailwind.
+						{personal.name}.
 					</p>
 				</div>
 			</div>
@@ -242,7 +231,7 @@
 				<div class="mt-16 border-t border-text-main/10 pt-6 md:hidden">
 					<p class="font-main text-xs text-text-sub">
 						&copy; {new Date().getFullYear()}
-						{personal.name}. Built with SvelteKit, GSAP, and Tailwind.
+						{personal.name}.
 					</p>
 				</div>
 			</div>

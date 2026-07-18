@@ -137,7 +137,7 @@
 
 			<!-- description -->
 			<div
-				class="z-20 flex w-full flex-col justify-center rounded-md bg-bg-main/40 p-6 pt-20 backdrop-blur-sm md:w-1/3 md:p-10"
+				class="z-20 flex w-full flex-col items-start justify-center rounded-md bg-bg-main/40 p-6 pt-20 backdrop-blur-sm md:w-1/3 md:p-10"
 			>
 				<h3 bind:this={titleEl} class="mb-2 text-xl font-bold md:text-2xl">
 					{projects[currentIndex.ind].title}
@@ -156,6 +156,12 @@
 						{/each}
 					</div>
 				{/if}
+				<a
+					class="text-md mt-3 rounded-md bg-accent px-3 py-2 text-text-main"
+					href={projects[currentIndex.ind].link}
+				>
+					Read more ->
+				</a>
 			</div>
 		</div>
 	</div>

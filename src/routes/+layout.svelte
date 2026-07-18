@@ -27,15 +27,6 @@
 	let loadProgress = $state(0);
 	let loadStatus = $state('Initializing...');
 
-	function handleNavClick(e, id) {
-		e.preventDefault();
-		const element = document.getElementById(id);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth' });
-			activeSection = id;
-		}
-	}
-
 	async function preloadGLB(url) {
 		const response = await fetch(url);
 		if (!response.ok) throw new Error(`Failed to fetch ${url}`);
@@ -155,6 +146,12 @@
 		startLoading();
 	});
 	let expanded = $state(false);
+	function handleExpand() {
+		// Only trigger if window exists and screen width is desktop-sized (>= 768px)
+		if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+			expanded = true;
+		}
+	}
 
 	function currentIndex() {
 		return navItems.findIndex((i) => i.id === activeSection);
@@ -224,7 +221,7 @@
 		class="fixed bottom-4 left-1/2 z-1000 -translate-x-1/2 transition-all duration-300 md:top-5"
 	>
 		<div
-			class="flex items-center justify-center gap-4 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-4 backdrop-blur-sm transition-all duration-300 md:min-w-[30vw] md:px-6 md:py-5"
+			class="flex items-center justify-center gap-4 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-4 backdrop-blur-sm transition-all duration-300 md:min-w-[30vw] md:px-6 md:py-3"
 		>
 			<!-- Prev -->
 			<button
@@ -233,7 +230,7 @@
 				class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-sub transition-colors duration-200 hover:text-accent"
 			>
 				<svg
-					class="h-3.5 w-3.5"
+					class="h-4.5 w-4.5"
 					fill="none"
 					stroke="currentColor"
 					stroke-width="2"
@@ -247,7 +244,7 @@
 			<div class="relative flex items-center justify-center">
 				{#if !expanded}
 					<button
-						onclick={() => (expanded = true)}
+						onclick={handleExpand}
 						class="text-md min-w-[64px] cursor-pointer text-center font-stroke-display tracking-wider text-accent uppercase transition-colors duration-300 sm:text-sm"
 					>
 						{navItems.find((i) => i.id === activeSection)?.label ?? ''}
@@ -280,7 +277,7 @@
 				class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-text-sub transition-colors duration-200 hover:text-accent"
 			>
 				<svg
-					class="h-3.5 w-3.5"
+					class="h-4.5 w-4.5"
 					fill="none"
 					stroke="currentColor"
 					stroke-width="2"
@@ -300,7 +297,7 @@
 			>
 				{#if isDark}
 					<svg
-						class="h-3.5 w-3.5 transition-transform duration-300 group-hover:scale-110"
+						class="h-4.5 w-4.5 transition-transform duration-300 group-hover:scale-110"
 						fill="none"
 						stroke="currentColor"
 						stroke-width="2"
@@ -314,7 +311,7 @@
 					</svg>
 				{:else}
 					<svg
-						class="h-3.5 w-3.5 transition-transform duration-300 group-hover:scale-110"
+						class="h-4.5 w-4.5 transition-transform duration-300 group-hover:scale-110"
 						fill="none"
 						stroke="currentColor"
 						stroke-width="2"

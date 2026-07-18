@@ -87,7 +87,7 @@
 					What I'm Good at.
 				</h3>
 				<div class="flex flex-wrap gap-2 md:gap-3">
-					{#each skills as skill}
+					{#each skills as skill (skill)}
 						<div class="about-pill">
 							<SkillPill label={skill} />
 						</div>

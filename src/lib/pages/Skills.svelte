@@ -20,9 +20,25 @@
 		Fedora,
 		Android
 	} from '@dev.icons/svelte/mono';
+	import { onMount } from 'svelte';
 	gsap.registerPlugin(ScrollTrigger);
 
-	let sectionEl = $state();
+	let sectionEl = $state(null);
+
+	onMount(() => {
+		gsap.from(sectionEl, {
+			y: 70,
+			opacity: 0,
+			duration: 0.8,
+			ease: 'power3.out',
+			scrollTrigger: {
+				trigger: sectionEl,
+				start: 'top 70%',
+				toggleActions: 'play none none reverse'
+			}
+		});
+	});
+
 	let skill_data = [
 		{
 			name: 'Languages',
@@ -144,7 +160,7 @@
 <section
 	bind:this={sectionEl}
 	id="skills"
-	class="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-bg-main md:flex-row"
+	class="relative z-30 flex min-h-screen w-full flex-col items-center overflow-hidden bg-transparent md:flex-row"
 >
 	<!-- Rotated SKILLS title -->
 	<div
@@ -173,6 +189,7 @@
 								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300"
 							>
 								{#if browser}
+									<!-- svelte-ignore svelte_component_deprecated -->
 									<svelte:component
 										this={item.icon}
 										size={70}
