@@ -221,7 +221,7 @@
 		class="fixed bottom-4 left-1/2 z-1000 -translate-x-1/2 transition-all duration-300 md:top-5"
 	>
 		<div
-			class="flex items-center justify-center gap-4 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-4 backdrop-blur-sm transition-all duration-300 md:min-w-[30vw] md:px-6 md:py-3"
+			class="flex items-center justify-center gap-2 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-2 backdrop-blur-sm transition-all duration-300 md:min-w-[30vw] md:px-6 md:py-3"
 		>
 			<!-- Prev -->
 			<button

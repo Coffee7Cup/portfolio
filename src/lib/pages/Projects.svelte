@@ -97,7 +97,7 @@
 >
 	<!-- Rotated PROJECTS title -->
 	<div
-		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
+		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-1 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
 		<div class="whitespace-nowrap md:-rotate-90">
 			<GrainyText
@@ -110,20 +110,21 @@
 
 	<!-- Content -->
 	<div
-		class="z-10 flex min-h-screen w-full flex-1 flex-col items-center justify-start p-2 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-0"
+		class="z-10 flex min-h-screen w-full flex-1 flex-col items-center justify-start p-2 pt-1 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-0"
 	>
 		<div
-			class="flex w-full flex-col items-center gap-0 md:flex-row md:items-stretch md:pr-10 md:pl-32 lg:pr-5 lg:pl-40"
+			class="flex h-auto w-full flex-col items-center gap-4 md:h-[65vh] md:flex-row md:items-stretch md:gap-0 md:pr-10 md:pl-32 lg:pr-5 lg:pl-40"
 		>
 			<!-- image frame -->
-			<div class="relative aspect-video w-full overflow-hidden rounded-md bg-neutral-950 md:w-4/5">
+			<div
+				class="relative aspect-video w-full shrink-0 overflow-hidden rounded-md bg-neutral-950 md:w-4/6"
+			>
 				<img
 					bind:this={imgEl}
 					src={projects[0].img}
 					alt={projects[0].title}
 					class="absolute inset-0 h-full w-full object-cover"
 				/>
-
 				<!-- reveal panels -->
 				<div
 					class="pointer-events-none absolute inset-0 grid"
@@ -137,16 +138,16 @@
 
 			<!-- description -->
 			<div
-				class="z-20 flex w-full flex-col items-start justify-center rounded-md bg-bg-main/40 p-6 pt-20 backdrop-blur-sm md:w-1/3 md:p-10"
+				class="z-20 flex w-full flex-col items-start justify-center rounded-md bg-bg-main/40 p-5 backdrop-blur-sm md:w-1/3 md:p-10 md:pt-20"
 			>
-				<h3 bind:this={titleEl} class="mb-2 text-xl font-bold md:text-2xl">
+				<h3 bind:this={titleEl} class="mb-2 text-lg font-bold md:text-2xl">
 					{projects[currentIndex.ind].title}
 				</h3>
-				<p bind:this={descEl} class="text-sm leading-relaxed opacity-80 md:text-base">
+				<p bind:this={descEl} class="text-sm leading-relaxed opacity-80">
 					{projects[currentIndex.ind].desc}
 				</p>
 				{#if projects[currentIndex.ind].tags}
-					<div class="mt-6 flex flex-wrap gap-2">
+					<div class="mt-4 flex flex-wrap gap-2 md:mt-6">
 						{#each projects[currentIndex.ind].tags as tag (tag)}
 							<span
 								class="dark:text-accent-light rounded-md bg-accent/20 px-2.5 py-1 font-main text-xs font-semibold text-accent dark:bg-accent/30"
@@ -156,12 +157,24 @@
 						{/each}
 					</div>
 				{/if}
-				<a
-					class="text-md mt-3 rounded-md bg-accent px-3 py-2 text-text-main"
-					href={projects[currentIndex.ind].link}
-				>
-					Read more ->
-				</a>
+				<div class="pointer-events-auto flex w-full flex-wrap items-center justify-start gap-3">
+					<a
+						target="_blank"
+						class="mt-2 flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
+						href={projects[currentIndex.ind].github}
+					>
+						Read more ->
+					</a>
+					{#if projects[currentIndex.ind].link}
+						<a
+							class="mt-2 flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
+							href={projects[currentIndex.ind].link}
+							target="_blank"
+						>
+							Visit ->
+						</a>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
