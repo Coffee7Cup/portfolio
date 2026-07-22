@@ -18,7 +18,7 @@
 		{ id: 'about', label: 'About' },
 		{ id: 'skills', label: 'Skills' },
 		{ id: 'projects', label: 'Projects' },
-		{ id: 'certificates', label: 'Certificates' },
+		{ id: 'experience', label: 'Experience' },
 		{ id: 'contact', label: 'Contact' }
 	];
 
@@ -94,7 +94,7 @@
 					: `${base}/${p.img.replace(/^\//, '')}`
 			);
 
-			let certUrls = portfolioData.certificates.map((c) =>
+			let certUrls = portfolioData.experience.map((c) =>
 				c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
 			);
 

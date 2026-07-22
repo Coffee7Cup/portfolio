@@ -6,7 +6,7 @@
 
 	let portfolioData = getContext('portfolio');
 
-	let certificates = portfolioData.certificates.map((c) =>
+	let experience = portfolioData.experience.map((c) =>
 		c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
 	);
 
@@ -15,9 +15,9 @@
 
 	function moveSlider(direction) {
 		if (direction === 'next') {
-			currentIndex = (currentIndex + 1) % certificates.length;
+			currentIndex = (currentIndex + 1) % experience.length;
 		} else {
-			currentIndex = (currentIndex - 1 + certificates.length) % certificates.length;
+			currentIndex = (currentIndex - 1 + experience.length) % experience.length;
 		}
 
 		gsap.to(sliderTrack, {
@@ -28,20 +28,20 @@
 	}
 </script>
 
-<section id="certificates" class="relative flex h-screen w-full flex-col bg-bg-main md:flex-row">
+<section id="experience" class="relative flex h-screen w-full flex-col bg-bg-main md:flex-row">
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-12 md:absolute md:left-0 md:h-full md:w-24 md:translate-x-10 md:px-4 md:pt-0"
 	>
 		<div class="whitespace-nowrap md:-rotate-90">
-			<GrainyText text="CERTIFICATES" size="text-[2.3rem] md:text-[5rem] font-stroke-display" />
+			<GrainyText text="EXPERIENCE" size="text-[2.3rem] md:text-[5rem] font-stroke-display" />
 		</div>
 	</div>
 
 	<div class=" flex h-full w-full items-center justify-center md:pl-40">
-		<div class="relative h-[90vh] w-full max-w-4xl overflow-hidden rounded-xl backdrop-blur-sm">
+		<div class="relative h-[90vh] w-full max-w-4xl overflow-x-hidden rounded-xl backdrop-blur-sm">
 			<!-- GSAP Track -->
 			<div bind:this={sliderTrack} class="flex h-full w-full">
-				{#each certificates as cert, i (i)}
+				{#each experience as cert, i (i)}
 					<div class="relative flex h-full w-full shrink-0 items-center justify-center p-4">
 						<img
 							src={cert}
@@ -53,7 +53,7 @@
 			</div>
 
 			<!-- Navigation Controls -->
-			<div class="absolute right-6 bottom-6 z-20 flex gap-3">
+			<div class="absolute right-6 bottom-8 z-20 flex gap-3">
 				<button
 					onclick={() => moveSlider('prev')}
 					class="text-main h text-main flex h-12 w-12 items-center justify-center rounded-2xl bg-accent backdrop-blur-md transition-all hover:scale-110 active:scale-95"
@@ -89,7 +89,7 @@
 			<!-- Pagination Indicator -->
 			<div class="text-main absolute bottom-9 left-6 z-20 text-sm font-medium tracking-widest">
 				{currentIndex + 1} <span class="text-main">/</span>
-				{certificates.length}
+				{experience.length}
 			</div>
 		</div>
 	</div>

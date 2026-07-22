@@ -52,5 +52,5 @@ export const portfolioData = {
       github: 'https://github.com/Coffee7Cup/frontend-donation'
     }
   ],
-  certificates: ['/certificates/mittal.png', "certificates/devit.png", "certificates/internpe.jpeg"]
+  experience: ['/certificates/mittal.png', "certificates/devit.png", "certificates/internpe.jpeg"]
 };

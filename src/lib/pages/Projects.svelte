@@ -143,7 +143,10 @@
 				<h3 bind:this={titleEl} class="mb-2 text-lg font-bold md:text-2xl">
 					{projects[currentIndex.ind].title}
 				</h3>
-				<p bind:this={descEl} class="text-sm leading-relaxed opacity-80">
+				<p
+					bind:this={descEl}
+					class="max-h-35 overflow-y-auto text-sm leading-relaxed opacity-80 sm:max-h-none"
+				>
 					{projects[currentIndex.ind].desc}
 				</p>
 				{#if projects[currentIndex.ind].tags}
