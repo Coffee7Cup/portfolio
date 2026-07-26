@@ -1,6 +1,8 @@
 <script>
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
+	import Wayland from '$lib/assets/wayland.svg';
+	import Iced from '$lib/assets/iced.svg';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { browser } from '$app/environment';
 	import {
@@ -18,7 +20,8 @@
 		Git,
 		LinuxTux,
 		Fedora,
-		Android
+		Blender,
+		ComposeMultiplatform
 	} from '@dev.icons/svelte/mono';
 	import { onMount } from 'svelte';
 	gsap.registerPlugin(ScrollTrigger);
@@ -108,15 +111,22 @@
 					why_this: 'Building dynamic, modular web views and reusable UI component architectures.'
 				},
 				{
-					icon: Android,
-					name: 'Android',
+					icon: ComposeMultiplatform,
+					name: 'JetpackCompose',
 					why_this: 'Modern native Android UI architecture utilizing declarative state components.'
 				},
 				{
-					icon: Rust,
+					icon: Iced,
+					isImage: true,
 					name: 'Iced.rs',
 					why_this:
 						'Crafting lightweight, cross-platform native desktop GUI architectures in pure Rust.'
+				},
+				{
+					icon: _React,
+					name: 'React Native',
+					why_this:
+						'Building cross-platform native mobile applications with shared JavaScript logic and native UI primitives.'
 				}
 			]
 		},
@@ -147,10 +157,17 @@
 					why_this: 'Cutting-edge packages, stability, and minimalist ricing configurations.'
 				},
 				{
-					icon: LinuxTux,
+					icon: Wayland,
+					isImage: true,
 					name: 'Wayland',
 					why_this:
 						'Modern display protocol layer powering fluid workspace rendering and window rules.'
+				},
+				{
+					icon: Blender,
+					name: 'Blender',
+					why_this:
+						'Established brands only need simple websites—growing ones need immersive 3D experiences to get noticed.'
 				}
 			]
 		}
@@ -162,7 +179,6 @@
 	id="skills"
 	class="relative z-30 flex min-h-screen w-full flex-col items-center overflow-hidden bg-transparent md:flex-row"
 >
-	<!-- Rotated SKILLS title -->
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
@@ -171,7 +187,6 @@
 		</div>
 	</div>
 
-	<!-- Content -->
 	<div
 		class="bg-re z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
 	>
@@ -189,13 +204,22 @@
 								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300"
 							>
 								{#if browser}
-									<!-- svelte-ignore svelte_component_deprecated -->
-									<svelte:component
-										this={item.icon}
-										size={70}
-										class="transition-all duration-300 group-hover:scale-105 group-hover:text-accent"
-									/>
-									<span class="text-sm">{item.name}</span>
+									{#if item.isImage}
+										{#await fetch(item.icon).then((res) => res.text()) then svgRaw}
+											<div
+												class="h-[70px] w-[70px] text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_svg]:h-full [&_svg]:w-full [&_svg]:fill-current"
+											>
+												{@html svgRaw}
+											</div>
+										{/await}
+									{:else}
+										<!-- svelte-ignore svelte_component_deprecated -->
+										<svelte:component
+											this={item.icon}
+											size={70}
+											class="fill-current text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_*]:fill-current"
+										/>
+									{/if} <span class="mt-2.5 text-sm">{item.name}</span>
 								{/if}
 							</div>
 						{/each}
