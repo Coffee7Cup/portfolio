@@ -4,7 +4,7 @@ export const portfolioData = {
     name: 'Yashwanth',
     title: 'Hey, I\'m Yashwanth',
     bio: 'I\'m a developer focused on building clean, efficient, and user-centric digital experiences. I specialize in systems programming, custom networking architectures, and crafting responsive frontend interfaces.',
-    email: 'maddysai9848@gmail.com',
+    email: 'yashwanthsaik444@gmail.com',
     github: 'https://github.com/coffee7cup',
     linkedin: 'https://www.linkedin.com/in/kategaru-yashwanth-sai-252486334?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
   },
