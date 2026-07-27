@@ -21,7 +21,11 @@
 		LinuxTux,
 		Fedora,
 		Blender,
-		ComposeMultiplatform
+		ComposeMultiplatform,
+		Postgresql,
+		MysqlIcon,
+		MongodbIcon,
+		Archlinux
 	} from '@dev.icons/svelte/mono';
 	import { onMount } from 'svelte';
 	gsap.registerPlugin(ScrollTrigger);
@@ -97,7 +101,7 @@
 			]
 		},
 		{
-			name: 'Frameworks',
+			name: 'Frameworks & DataBases',
 			items: [
 				{
 					icon: SvelteIcon,
@@ -127,6 +131,24 @@
 					name: 'React Native',
 					why_this:
 						'Building cross-platform native mobile applications with shared JavaScript logic and native UI primitives.'
+				},
+				{
+					icon: Postgresql,
+					name: 'PostgreSQL',
+					why_this:
+						'The Swiss Army knife of databases—the go-to choice for structured SQL and semi-structured JSON data.'
+				},
+				{
+					icon: MysqlIcon,
+					name: 'MySQL',
+					why_this:
+						'Battle-tested relational database ideal for fast read operations, simple schemas, and ACID-compliant transactions.'
+				},
+				{
+					icon: MongodbIcon,
+					name: 'MongoDB',
+					why_this:
+						'The standard for flexible, document-based NoSQL storage—ideal for rapid schema iteration and unstructured JSON-like data.'
 				}
 			]
 		},
@@ -168,6 +190,12 @@
 					name: 'Blender',
 					why_this:
 						'Established brands only need simple websites—growing ones need immersive 3D experiences to get noticed.'
+				},
+				{
+					icon: Archlinux,
+					name: 'Arch Linux',
+					why_this:
+						'Full system transparency and minimal bloat—building a lean, tailor-made environment optimized for development performance.'
 				}
 			]
 		}
