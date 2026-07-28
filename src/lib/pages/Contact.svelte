@@ -25,7 +25,7 @@
 		const subject = encodeURIComponent('Portfolio Inquiry');
 		const body = encodeURIComponent(`Hi, I'm ${name},\n\n${message}`);
 
-		window.location.href = `mailto:maddysai9848@gmail.com?subject=${subject}&body=${body}`;
+		window.location.href = `mailto:yashwanthsaik444@gmail.com?subject=${subject}&body=${body}`;
 
 		setTimeout(() => {
 			formStatus = 'success';

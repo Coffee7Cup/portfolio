@@ -31,6 +31,7 @@
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state(null);
+	let { text = $bindable(''), emotion = $bindable('normal') } = $props();
 
 	onMount(() => {
 		gsap.from(sectionEl, {
@@ -216,7 +217,7 @@
 	</div>
 
 	<div
-		class="bg-re z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
+		class="z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
 	>
 		<div
 			class="grid h-full w-full grid-cols-1 gap-10 pr-6 md:grid-cols-3 md:gap-5 md:pr-20 md:pl-32 lg:pl-40"
@@ -230,6 +231,14 @@
 						{#each skill.items as item (item.name)}
 							<div
 								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300"
+								onmouseenter={() => {
+									text = item.why_this;
+									emotion = 'okay';
+								}}
+								onmouseleave={() => {
+									text = '';
+									emotion = 'normal';
+								}}
 							>
 								{#if browser}
 									{#if item.isImage}

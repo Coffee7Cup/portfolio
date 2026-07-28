@@ -2,6 +2,8 @@
 	import { getContext } from 'svelte';
 	const portfolio = getContext('portfolio');
 	const personal = portfolio.personal;
+
+	let { text, emotion } = $props();
 </script>
 
 <div class="pointer-events-none relative inset-0 z-10 h-screen w-screen">
