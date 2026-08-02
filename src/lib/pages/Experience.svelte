@@ -5,6 +5,7 @@
 	import { base } from '$app/paths';
 
 	let portfolioData = getContext('portfolio');
+	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
 	let experience = portfolioData.experience.map((c) =>
 		c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
@@ -28,7 +29,18 @@
 	}
 </script>
 
-<section id="experience" class="relative flex h-screen w-full flex-col bg-bg-main md:flex-row">
+<section
+	id="experience"
+	class="relative flex h-screen w-full flex-col bg-bg-main md:flex-row"
+	onmouseenter={() => {
+		text = 'My Certificates & Experience';
+		pointTo = 'default';
+	}}
+	onmouseleave={() => {
+		text = '';
+		pointTo = 'default';
+	}}
+>
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-12 md:absolute md:left-0 md:h-full md:w-24 md:translate-x-10 md:px-4 md:pt-0"
 	>

@@ -31,7 +31,7 @@
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state(null);
-	let { text = $bindable(''), emotion = $bindable('normal') } = $props();
+	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
 	onMount(() => {
 		gsap.from(sectionEl, {
@@ -230,33 +230,35 @@
 					<div class="grid w-full grid-cols-2 gap-5">
 						{#each skill.items as item (item.name)}
 							<div
-								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300"
+								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300 cursor-pointer"
 								onmouseenter={() => {
 									text = item.why_this;
-									emotion = 'okay';
+									pointTo = 'default';
 								}}
 								onmouseleave={() => {
 									text = '';
-									emotion = 'normal';
+									pointTo = 'default';
 								}}
 							>
 								{#if browser}
 									{#if item.isImage}
 										{#await fetch(item.icon).then((res) => res.text()) then svgRaw}
 											<div
-												class="h-[70px] w-[70px] text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_svg]:h-full [&_svg]:w-full [&_svg]:fill-current"
+												class="pointer-events-none h-[70px] w-[70px] text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_svg]:h-full [&_svg]:w-full [&_svg]:fill-current"
 											>
 												{@html svgRaw}
 											</div>
 										{/await}
 									{:else}
 										<!-- svelte-ignore svelte_component_deprecated -->
-										<svelte:component
-											this={item.icon}
-											size={70}
-											class="fill-current text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_*]:fill-current"
-										/>
-									{/if} <span class="mt-2.5 text-sm">{item.name}</span>
+										<div class="pointer-events-none">
+											<svelte:component
+												this={item.icon}
+												size={70}
+												class="fill-current text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_*]:fill-current"
+											/>
+										</div>
+									{/if} <span class="pointer-events-none mt-2.5 text-sm">{item.name}</span>
 								{/if}
 							</div>
 						{/each}

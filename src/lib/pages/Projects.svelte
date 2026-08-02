@@ -7,6 +7,8 @@
 
 	gsap.registerPlugin(ScrollTrigger);
 
+	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
+
 	const portfolio = getContext('portfolio');
 	const projects = portfolio.projects.map((p) => ({
 		...p,
@@ -94,6 +96,14 @@
 	bind:this={sectionEl}
 	id="projects"
 	class="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-bg-main md:flex-row"
+	onmouseenter={() => {
+		text = 'projects';
+		pointTo = 'selector:#project-readmore-btn';
+	}}
+	onmouseleave={() => {
+		text = '';
+		pointTo = 'default';
+	}}
 >
 	<!-- Rotated PROJECTS title -->
 	<div
@@ -162,6 +172,7 @@
 				{/if}
 				<div class="pointer-events-auto flex w-full flex-wrap items-center justify-start gap-3">
 					<a
+						id="project-readmore-btn"
 						target="_blank"
 						class="mt-2 flex items-center gap-2 rounded-xl border border-text-main/10 bg-text-main/5 px-5 py-3 font-main text-sm font-medium text-accent transition-all duration-300 hover:border-accent hover:text-accent hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]"
 						href={projects[currentIndex.ind].github}

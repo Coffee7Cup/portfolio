@@ -7,6 +7,8 @@
 	import { base } from '$app/paths';
 	gsap.registerPlugin(ScrollTrigger);
 
+	let { compText = $bindable(""), compPointTo = $bindable("") } = $props();
+
 	let canvasElement = $state();
 	let containerElement = $state();
 	let canvasWrapperElement = $state();
@@ -167,7 +169,19 @@
 	});
 </script>
 
-<div bind:this={containerElement} id="3d" class="scroll-container relative h-[300vh] w-full">
+<div
+	onmouseenter={() => {
+		compText = 'welcome to my portfolio!';
+		compPointTo = 'default';
+	}}
+	onmouseleave={() => {
+		compText = '';
+		compPointTo = 'default';
+	}}
+	bind:this={containerElement}
+	id="3d"
+	class="scroll-container relative h-[300vh] w-full"
+>
 	<div bind:this={canvasWrapperElement} class="canvas-wrapper fixed inset-0">
 		<canvas bind:this={canvasElement} class="block h-full w-full"></canvas>
 	</div>

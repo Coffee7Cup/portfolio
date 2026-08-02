@@ -8,6 +8,7 @@
 	gsap.registerPlugin(ScrollTrigger);
 
 	let sectionEl = $state();
+	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
 	const portfolio = getContext('portfolio');
 	const { bio, highlights: skills } = portfolio.about;
@@ -61,6 +62,14 @@
 	bind:this={sectionEl}
 	id="about"
 	class="relative flex min-h-screen w-full flex-col items-center bg-bg-main md:flex-row"
+	onmouseenter={() => {
+		text = 'About Me';
+		pointTo = 'right-middle';
+	}}
+	onmouseleave={() => {
+		text = '';
+		pointTo = 'default';
+	}}
 >
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"

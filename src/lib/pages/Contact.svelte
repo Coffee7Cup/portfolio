@@ -13,6 +13,7 @@
 	let formStatus = $state('');
 	let name = $state('');
 	let message = $state('');
+	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
 	const portfolio = getContext('portfolio');
 	const personal = portfolio.personal;
@@ -67,6 +68,14 @@
 	bind:this={sectionEl}
 	id="contact"
 	class="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-bg-main md:flex-row"
+	onmouseenter={() => {
+		text = 'Get in touch';
+		pointTo = 'selector:#send-message-btn';
+	}}
+	onmouseleave={() => {
+		text = '';
+		pointTo = 'default';
+	}}
 >
 	<!-- CONTACT title -->
 	<div
@@ -213,6 +222,7 @@
 						></textarea>
 					</div>
 					<button
+						id="send-message-btn"
 						type="submit"
 						disabled={formStatus === 'sending' || formStatus === 'success'}
 						class="mt-2 flex items-center justify-center rounded-xl bg-accent px-6 py-3.5 font-stroke-clean text-sm font-bold tracking-wider text-white uppercase transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,0,0,0.4)] active:scale-[0.98] disabled:scale-100 disabled:opacity-50"

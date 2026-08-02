@@ -10,7 +10,7 @@
 
 	let threeDimContainer = $state();
 	let compText = $state('');
-	let compEmotion = $state('normal');
+	let compPointTo = $state('normal');
 </script>
 
 <div class="relative m-0 w-full overflow-x-hidden bg-bg-main p-0">
@@ -21,32 +21,26 @@
 		id="3d-container"
 		class="pointer-events-none absolute inset-0 z-20 max-w-screen overflow-hidden bg-transparent"
 	>
-		<Tee />
+		<Tee bind:compText bind:compPointTo />
 	</div>
 
 	<!-- Sections -->
 	<section
 		id="home"
 		class="relative min-h-screen w-screen"
-		onmouseenter={() => {
-			compText = 'This is my laptop ';
-		}}
-		onmouseleave={() => {
-			compText = '';
-		}}
 	>
-		<Home text={compText} emotion={compEmotion} />
+		<Home bind:text={compText} bind:pointTo={compPointTo} />
 	</section>
 
-	<About />
+	<About bind:text={compText} bind:pointTo={compPointTo} />
 
-	<Skills bind:text={compText} bind:emotion={compEmotion} />
+	<Skills bind:text={compText} bind:pointTo={compPointTo} />
 
-	<Projects bind:text={compText} bind:emotion={compEmotion} />
+	<Projects bind:text={compText} bind:pointTo={compPointTo} />
 
-	<Experience />
+	<Experience bind:text={compText} bind:pointTo={compPointTo} />
 
-	<Contact bind:text={compText} bind:emotion={compEmotion} />
+	<Contact bind:text={compText} bind:pointTo={compPointTo} />
 
-	<Companion bind:text={compText} bind:emotion={compEmotion} />
+	<Companion bind:text={compText} bind:pointTo={compPointTo} />
 </div>

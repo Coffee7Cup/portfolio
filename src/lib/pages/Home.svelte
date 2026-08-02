@@ -3,10 +3,20 @@
 	const portfolio = getContext('portfolio');
 	const personal = portfolio.personal;
 
-	let { text, emotion } = $props();
+	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 </script>
 
-<div class="pointer-events-none relative inset-0 z-10 h-screen w-screen">
+<div
+	class="pointer-events-auto relative inset-0 z-10 h-screen w-screen"
+	onmouseenter={() => {
+		text = 'This is my laptop';
+		pointTo = 'middle';
+	}}
+	onmouseleave={() => {
+		text = '';
+		pointTo = 'default';
+	}}
+>
 	<div
 		class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 scale-70 md:-translate-x-105 md:translate-y-120 md:scale-100"
 	>
