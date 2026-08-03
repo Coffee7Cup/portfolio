@@ -174,7 +174,6 @@
 				<!-- Footer -->
 				<div class="mt-16 hidden border-t border-text-main/10 pt-6 md:block">
 					<p class="font-main text-xs text-text-sub">
-						&copy; {new Date().getFullYear()}
 						{personal.name}.
 					</p>
 				</div>
@@ -182,9 +181,7 @@
 
 			<!-- Contact Form -->
 			<div class="contact-form-container order-2 md:order-2">
-				<h3 class="mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl">
-					Send a message.
-				</h3>
+				<div class="text-md md:text-md mb-6 font-stroke-display text-accent">Send a message.</div>
 
 				<form onsubmit={handleSubmit} class="flex flex-col gap-5">
 					<div>
@@ -240,7 +237,6 @@
 				<!-- Footer (Mobile Only) -->
 				<div class="mt-16 border-t border-text-main/10 pt-6 md:hidden">
 					<p class="font-main text-xs text-text-sub">
-						&copy; {new Date().getFullYear()}
 						{personal.name}.
 					</p>
 				</div>

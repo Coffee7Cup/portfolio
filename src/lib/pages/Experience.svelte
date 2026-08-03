@@ -68,7 +68,7 @@
 			<div class="absolute right-6 bottom-8 z-20 flex gap-3">
 				<button
 					onclick={() => moveSlider('prev')}
-					class="text-main h text-main flex h-12 w-12 items-center justify-center rounded-2xl bg-accent backdrop-blur-md transition-all hover:scale-110 active:scale-95"
+					class="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-white backdrop-blur-md transition-all hover:scale-110 active:scale-95"
 					aria-label="Previous certificate"
 				>
 					<svg
@@ -83,7 +83,7 @@
 				</button>
 				<button
 					onclick={() => moveSlider('next')}
-					class="text-main h text-main flex h-12 w-12 items-center justify-center rounded-2xl bg-accent backdrop-blur-md transition-all hover:scale-110 active:scale-95"
+					class="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-white backdrop-blur-md transition-all hover:scale-110 active:scale-95"
 					aria-label="Next certificate"
 				>
 					<svg
