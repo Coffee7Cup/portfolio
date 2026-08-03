@@ -33,6 +33,27 @@
 	let sectionEl = $state(null);
 	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
+	const sectionDefaultText = 'My tech stack';
+
+	// Hover is tracked in JS via a unique key instead of Tailwind's `group`/
+	// `group-hover:` pseudo-classes. This guarantees identical, reliable
+	// hover behavior for every item regardless of how its icon is rendered
+	// (svelte:component vs raw fetched SVG), since both branches now read
+	// from the exact same `isHovered` boolean.
+	let hoveredKey = $state(null);
+
+	function handleEnter(key, why) {
+		hoveredKey = key;
+		text = why;
+		pointTo = 'default';
+	}
+
+	function handleLeave() {
+		hoveredKey = null;
+		text = sectionDefaultText;
+		pointTo = 'default';
+	}
+
 	onMount(() => {
 		gsap.from(sectionEl, {
 			y: 70,
@@ -204,9 +225,10 @@
 </script>
 
 <section
+	aria-label="Hover effect"
 	bind:this={sectionEl}
 	id="skills"
-	class="relative z-30 flex min-h-screen w-full flex-col items-center overflow-hidden bg-transparent md:flex-row"
+	class="pointer-events-auto relative z-30 flex min-h-screen w-full flex-col items-center overflow-hidden bg-transparent md:flex-row"
 >
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-24 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
@@ -217,7 +239,7 @@
 	</div>
 
 	<div
-		class="z-100 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
+		class="z-40 flex min-h-screen w-full flex-1 flex-col items-center justify-start px-6 pt-10 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-10 md:pt-16"
 	>
 		<div
 			class="grid h-full w-full grid-cols-1 gap-10 pr-6 md:grid-cols-3 md:gap-5 md:pr-20 md:pl-32 lg:pl-40"
@@ -229,36 +251,36 @@
 					</div>
 					<div class="grid w-full grid-cols-2 gap-5">
 						{#each skill.items as item (item.name)}
+							{@const key = `${skill.name}-${item.name}`}
+							{@const isHovered = hoveredKey === key}
 							<div
-								class="group flex flex-col items-center justify-center text-text-main transition-all duration-300 cursor-pointer"
-								onmouseenter={() => {
-									text = item.why_this;
-									pointTo = 'default';
-								}}
-								onmouseleave={() => {
-									text = '';
-									pointTo = 'default';
-								}}
+								aria-label="Hover"
+								class="flex cursor-pointer flex-col items-center justify-center text-text-main"
+								onmouseenter={() => handleEnter(key, item.why_this)}
+								onmouseleave={handleLeave}
 							>
 								{#if browser}
-									{#if item.isImage}
-										{#await fetch(item.icon).then((res) => res.text()) then svgRaw}
-											<div
-												class="pointer-events-none h-[70px] w-[70px] text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_svg]:h-full [&_svg]:w-full [&_svg]:fill-current"
-											>
-												{@html svgRaw}
-											</div>
-										{/await}
-									{:else}
-										<!-- svelte-ignore svelte_component_deprecated -->
-										<div class="pointer-events-none">
+									<div
+										class="pointer-events-none flex h-[70px] w-[70px] items-center justify-center transition-all duration-300 [&_*]:fill-current"
+										class:scale-105={isHovered}
+										class:text-accent={isHovered}
+									>
+										{#if item.isImage}
+											{#await fetch(item.icon).then((res) => res.text()) then svgRaw}
+												<div class="h-full w-full [&_svg]:h-full [&_svg]:w-full">
+													{@html svgRaw}
+												</div>
+											{/await}
+										{:else}
+											<!-- svelte-ignore svelte_component_deprecated -->
 											<svelte:component
 												this={item.icon}
 												size={70}
-												class="fill-current text-text-main transition-all duration-300 group-hover:scale-105 group-hover:text-accent [&_*]:fill-current"
+												class="h-full w-full fill-current"
 											/>
-										</div>
-									{/if} <span class="pointer-events-none mt-2.5 text-sm">{item.name}</span>
+										{/if}
+									</div>
+									<span class="pointer-events-none mt-2.5 text-sm">{item.name}</span>
 								{/if}
 							</div>
 						{/each}

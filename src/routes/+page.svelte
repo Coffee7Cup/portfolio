@@ -14,8 +14,6 @@
 </script>
 
 <div class="relative m-0 w-full overflow-x-hidden bg-bg-main p-0">
-	<!-- 3D Canvas Scroll Experience wrapper -->
-	<!-- We constrain this container to max-w-full to prevent horizontal scrolling on mobile -->
 	<div
 		bind:this={threeDimContainer}
 		id="3d-container"
@@ -24,11 +22,7 @@
 		<Tee bind:compText bind:compPointTo />
 	</div>
 
-	<!-- Sections -->
-	<section
-		id="home"
-		class="relative min-h-screen w-screen"
-	>
+	<section id="home" class="relative min-h-screen w-screen">
 		<Home bind:text={compText} bind:pointTo={compPointTo} />
 	</section>
 

@@ -1,13 +1,39 @@
 <script>
-	let { companion = 'arrow', target = null, pointTo = 'default', text = null } = $props();
+	import { onMount, untrack } from 'svelte';
 
-	let displayText = $derived(text ?? '');
+	let { companion = 'arrow', target = null, pointTo = 'default', text = null } = $props();
 
 	let mouseX = $state(0);
 	let mouseY = $state(0);
 	let isMdUp = $state(false);
 
+	// Track the last non-empty text so we can fade out gracefully
+	let lastText = $state('');
+	let isVisible = $state(false);
+	let _hideTimeout = null;
+
 	$effect(() => {
+		const incoming = text ?? '';
+
+		untrack(() => {
+			if (incoming !== '') {
+				if (_hideTimeout) {
+					clearTimeout(_hideTimeout);
+					_hideTimeout = null;
+				}
+				lastText = incoming;
+				isVisible = true;
+			} else {
+				if (_hideTimeout) clearTimeout(_hideTimeout);
+				_hideTimeout = setTimeout(() => {
+					isVisible = false;
+					_hideTimeout = null;
+				}, 150);
+			}
+		});
+	});
+
+	onMount(() => {
 		const mql = window.matchMedia('(min-width: 768px)');
 		isMdUp = mql.matches;
 
@@ -25,6 +51,7 @@
 		return () => {
 			mql.removeEventListener('change', handleMqlChange);
 			window.removeEventListener('mousemove', handleMouseMove);
+			if (_hideTimeout) clearTimeout(_hideTimeout);
 		};
 	});
 
@@ -69,26 +96,26 @@
 			return pointTo;
 		}
 
-		return 0; // Default facing top
+		return 45; // Default facing top
 	});
 </script>
 
 <div
-	class="pointer-events-none z-[10000] transition-opacity duration-300"
+	class="pointer-events-none z-[10000] transition-opacity duration-200"
 	class:fixed={isMdUp}
+	class:opacity-0={!isVisible}
+	class:opacity-100={isVisible}
 	style={isMdUp ? `left: ${mouseX}px; top: ${mouseY}px;` : ''}
 >
-	{#if displayText !== ''}
-		<div
-			class="flex min-h-10 max-w-xs -translate-x-full -translate-y-full items-center gap-2 rounded-lg border border-accent/40 bg-bg-main/80 px-3 py-1.5 text-sm font-medium text-text-main shadow-lg backdrop-blur-md transition-all duration-100"
-		>
-			<span class="leading-tight">{displayText}</span>
-			<img
-				src={`/comp/${companion}.svg`}
-				alt="comp"
-				class="h-7 w-7 shrink-0 transition-transform "
-				style="transform: rotate({arrowRotation}deg);"
-			/>
-		</div>
-	{/if}
+	<div
+		class="flex min-h-10 max-w-xs -translate-x-full -translate-y-full items-center gap-2 rounded-lg border border-accent/40 bg-bg-main/80 px-3 py-1.5 text-sm font-medium text-text-main shadow-lg backdrop-blur-md transition-all"
+	>
+		<span class="leading-tight">{lastText}</span>
+		<img
+			src={`/comp/${companion}.svg`}
+			alt="comp"
+			class="h-7 w-7 shrink-0 transition-transform"
+			style="transform: rotate({arrowRotation}deg);"
+		/>
+	</div>
 </div>
