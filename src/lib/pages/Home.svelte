@@ -1,4 +1,5 @@
 <script>
+	import { resolve } from '$app/paths';
 	import { getContext } from 'svelte';
 	const portfolio = getContext('portfolio');
 	const personal = portfolio.personal;

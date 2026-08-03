@@ -3,7 +3,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { onMount, setContext } from 'svelte';
 	import { portfolioData } from '$lib/portfolioData.js';
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 	import { gsap } from 'gsap';
 
 	import Loading from '$lib/pages/Loading.svelte';
@@ -218,7 +218,7 @@
 {#if isLoaded}
 	<!-- Floating Nav Bar -->
 	<header
-		class="fixed bottom-4 h-10 left-1/2 z-1000 -translate-x-1/2 transition-all duration-300 md:top-5"
+		class="fixed bottom-4 left-1/2 z-1000 h-10 -translate-x-1/2 transition-all duration-300 md:top-5"
 	>
 		<div
 			class="flex items-center justify-center gap-2 rounded-full border border-text-main/10 bg-bg-main/70 px-4 py-2 backdrop-blur-sm transition-all duration-300 md:min-w-[30vw] md:px-6 md:py-3"
@@ -325,12 +325,34 @@
 					</svg>
 				{/if}
 			</button>
-			<!-- <div class="h-4 w-px bg-text-main/10"></div> -->
-			<!-- <button onclick={}> -->
-			<!---->
-			<!--    </button> -->
 		</div>
 	</header>
+	<a
+		href={resolve('/resume.pdf')}
+		download="Resume_{portfolioData.personal.name}.pdf"
+		aria-label="Download CV"
+		class="group fixed right-4 bottom-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-text-main/10 bg-bg-main/70 text-text-sub backdrop-blur-sm transition-all duration-300 hover:border-accent hover:text-accent md:right-6 md:bottom-6 md:h-12 md:w-12"
+	>
+		<!-- Tooltip -->
+		<span
+			class="pointer-events-none absolute right-full mr-3 rounded-md border border-accent/30 bg-bg-main/90 px-4 py-3 text-lg whitespace-nowrap text-accent opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100"
+		>
+			Download CV
+		</span>
 
+		<svg
+			class="h-5 w-5 md:h-6 md:w-6"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			viewBox="0 0 24 24"
+		>
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+			/>
+		</svg>
+	</a>
 	{@render children()}
 {/if}

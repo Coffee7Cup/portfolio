@@ -35,11 +35,6 @@
 
 	const sectionDefaultText = 'My tech stack';
 
-	// Hover is tracked in JS via a unique key instead of Tailwind's `group`/
-	// `group-hover:` pseudo-classes. This guarantees identical, reliable
-	// hover behavior for every item regardless of how its icon is rendered
-	// (svelte:component vs raw fetched SVG), since both branches now read
-	// from the exact same `isHovered` boolean.
 	let hoveredKey = $state(null);
 
 	function handleEnter(key, why) {
@@ -255,7 +250,7 @@
 							{@const isHovered = hoveredKey === key}
 							<div
 								aria-label="Hover"
-								class="flex cursor-pointer flex-col items-center justify-center text-text-main"
+								class="flex flex-col items-center justify-center text-text-main"
 								onmouseenter={() => handleEnter(key, item.why_this)}
 								onmouseleave={handleLeave}
 							>

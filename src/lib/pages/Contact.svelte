@@ -6,6 +6,7 @@
 	import { GithubIcon, Linkerd, Twitter } from '@dev.icons/svelte/mono';
 	import { browser } from '$app/environment';
 	import linkedin from '$lib/assets/linkedin.svg';
+	import { resolve } from '$app/paths';
 
 	gsap.registerPlugin(ScrollTrigger);
 
@@ -106,7 +107,7 @@
 						new opportunities.
 					</p>
 
-					<div class="flex flex-col gap-4">
+					<div class="m-2 flex flex-col gap-4">
 						<div class="flex items-center gap-4">
 							<div
 								class="flex h-11 w-11 items-center justify-center rounded-lg border border-text-main/10 bg-text-main/5 text-accent"
@@ -219,6 +220,14 @@
 						></textarea>
 					</div>
 					<button
+						onmouseenter={() => {
+							text = 'Get in touch';
+							pointTo = 'default';
+						}}
+						onmouseleave={() => {
+							text = 'Get in touch';
+							pointTo = 'selector:#send-message-btn';
+						}}
 						id="send-message-btn"
 						type="submit"
 						disabled={formStatus === 'sending' || formStatus === 'success'}
@@ -232,6 +241,14 @@
 							Send Message
 						{/if}
 					</button>
+					<a
+						id="send-message-btn"
+						href={resolve('/resume.pdf')}
+						download={`Resume_${personal.name}`}
+						class="bor mt-2 flex items-center justify-center rounded-xl border-1 border-accent bg-bg-main px-6 py-3.5 font-stroke-clean text-sm font-bold tracking-wider text-accent uppercase transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,0,0,0.4)] active:scale-[0.98]"
+					>
+						Download CV
+					</a>
 				</form>
 
 				<!-- Footer (Mobile Only) -->

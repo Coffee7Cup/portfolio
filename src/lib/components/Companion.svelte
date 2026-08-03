@@ -1,5 +1,6 @@
 <script>
 	import { onMount, untrack } from 'svelte';
+	import { base } from '$app/paths';
 
 	let { companion = 'arrow', target = null, pointTo = 'default', text = null } = $props();
 
@@ -108,11 +109,11 @@
 	style={isMdUp ? `left: ${mouseX}px; top: ${mouseY}px;` : ''}
 >
 	<div
-		class="flex min-h-10 max-w-xs -translate-x-full -translate-y-full items-center gap-2 rounded-lg border border-accent/40 bg-bg-main/80 px-3 py-1.5 text-sm font-medium text-text-main shadow-lg backdrop-blur-md transition-all"
+		class="flex min-h-10 max-w-xs -translate-x-full -translate-y-full items-center gap-2 rounded-lg border border-accent/40 bg-bg-main/50 px-3 py-1.5 text-sm font-medium text-text-main shadow-lg backdrop-blur-sm transition-all"
 	>
 		<span class="leading-tight">{lastText}</span>
 		<img
-			src={`/comp/${companion}.svg`}
+			src={`${base}/comp/${companion}.svg`}
 			alt="comp"
 			class="h-7 w-7 shrink-0 transition-transform"
 			style="transform: rotate({arrowRotation}deg);"
