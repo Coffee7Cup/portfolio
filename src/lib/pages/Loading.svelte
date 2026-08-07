@@ -1,79 +1,143 @@
 <script>
 	import fav from '$lib/assets/favicon.svg';
-	let { progress = 0, status = 'Initializing...' } = $props();
+	import { gsap } from 'gsap';
+	let { progress = 0, onComplete = () => {} } = $props();
 
-	const bootLines = [
-		'Loading kernel modules',
-		'Mounting filesystems',
-		'Starting udev',
-		'Initializing network interfaces',
-		'Starting system logger',
-		'Loading display server',
-		'Starting session manager'
-	];
+	let containerRef = $state();
+	let logoRef = $state();
+	let percentRef = $state();
+	let bottomRef = $state();
 
-	const barWidth = 42;
+	let hidden = $state(false);
 
-	let elapsed = $derived((progress / 100) * 4.238); // fake seconds-since-boot, cosmetic only
-	let visibleLines = $derived(bootLines.slice(0, Math.ceil((progress / 100) * bootLines.length)));
-	let filled = $derived(Math.round((progress / 100) * barWidth));
-	let bar = $derived('█'.repeat(filled) + '░'.repeat(barWidth - filled));
+	const circumference = 2 * Math.PI * 120;
+	let dashOffset = $derived(circumference - (progress / 100) * circumference);
+
+	$effect(() => {
+		if (progress >= 100 && containerRef) {
+			const tl = gsap.timeline({
+				onComplete: () => {
+					hidden = true;
+					onComplete();
+				}
+			});
+
+			tl.to(
+				logoRef,
+				{
+					scale: 0.3,
+					opacity: 0,
+					duration: 0.8,
+					ease: 'expo.inOut'
+				},
+				0
+			);
+
+			tl.to(
+				percentRef,
+				{
+					y: 20,
+					opacity: 0,
+					duration: 0.4,
+					ease: 'power2.in'
+				},
+				0.1
+			);
+
+			tl.to(
+				bottomRef,
+				{
+					y: 15,
+					opacity: 0,
+					duration: 0.3,
+					ease: 'power2.in'
+				},
+				0.15
+			);
+
+			tl.to(
+				containerRef,
+				{
+					opacity: 0,
+					duration: 0.8,
+					ease: 'power2.inOut'
+				},
+				0.3
+			);
+		}
+	});
 </script>
 
-<div class="loader-overlay fixed inset-0 z-9999 flex flex-col bg-black font-mono text-white">
-	<!-- top wordmark -->
-	<div class="flex items-center justify-between border-b border-white/10 px-8 py-5">
-		<span class="text-xs font-semibold tracking-[0.3em] text-white/50 uppercase">
-			<img src={fav} alt="favicon" class="h-10" />
-		</span>
-		<span class="text-xs tracking-[0.3em] text-white/30 uppercase">Portfolio</span>
-	</div>
+{#if !hidden}
+	<div
+		bind:this={containerRef}
+		class="fixed inset-0 z-9999 flex flex-col bg-black font-sans text-white"
+	>
+		<!-- center stage -->
+		<div class="relative z-10 flex flex-1 flex-col items-center justify-center px-10">
+			<!-- logo with single ring -->
+			<div class="relative flex h-[300px] w-[300px] items-center justify-center">
+				<!-- static ring -->
+				<div class="absolute inset-0 rounded-full border border-white/[0.06]"></div>
 
-	<!-- scrolling boot log -->
-	<div class="flex flex-1 flex-col justify-end overflow-hidden px-8 py-8">
-		<img src={fav} alt="favicon" class="max-w-2xl" />
-		<div class="mx-auto w-full max-w-2xl">
-			{#each visibleLines as line, i (i)}
-				<div class="text-[13px] leading-relaxed text-white/60">
-					<span class="text-white/30">[{(i * 0.612).toFixed(6)}]</span>
-					{line}
+				<!-- SVG progress ring -->
+				<svg
+					class="absolute"
+					width="300"
+					height="300"
+					viewBox="0 0 300 300"
+					style="transform:rotate(-90deg)"
+				>
+					<circle
+						cx="150"
+						cy="150"
+						r="120"
+						fill="none"
+						stroke="rgba(255,255,255,0.04)"
+						stroke-width="1"
+					/>
+					<circle
+						cx="150"
+						cy="150"
+						r="120"
+						fill="none"
+						stroke="#ef4444"
+						stroke-width="2"
+						stroke-dasharray={circumference}
+						stroke-dashoffset={dashOffset}
+						stroke-linecap="round"
+						class="transition-[stroke-dashoffset] duration-500"
+					/>
+				</svg>
+
+				<!-- the mark -->
+				<div bind:this={logoRef} class="animate-breathe">
+					<img src={fav} alt="logo" class="h-50 w-50" />
 				</div>
-			{/each}
-			<div class="flex items-center gap-1.5 text-[13px] text-white/90">
-				<span class="text-white/30">[{elapsed.toFixed(6)}]</span>
-				<span>{status}</span>
-				<span class="cursor-blink inline-block h-[14px] w-[7px] bg-white/80"></span>
 			</div>
-		</div>
-	</div>
 
-	<!-- bottom progress -->
-	<div class="border-t border-white/10 px-8 py-6">
-		<div class="mx-auto flex w-full max-w-2xl flex-col gap-2">
-			<div class="flex justify-between text-[10px] tracking-widest text-white/40 uppercase">
-				<span>Booting</span>
-				<span>{progress}%</span>
-			</div>
-			<div class="text-xs leading-none tracking-tighter text-white/70">
-				[{bar}]
+			<!-- BOLD percentage -->
+			<div bind:this={percentRef} class="mt-8 text-center">
+				<p class="text-7xl leading-none font-extrabold tracking-tighter text-red-500 tabular-nums">
+					{progress}<span class="ml-1 align-super text-2xl font-bold text-red-500/50">%</span>
+				</p>
 			</div>
 		</div>
+		<!-- bottom bar -->
 	</div>
-</div>
+{/if}
 
 <style>
-	.cursor-blink {
-		animation: blink 1s steps(1) infinite;
-	}
-	@keyframes blink {
+	@keyframes breathe {
 		0%,
-		49% {
-			opacity: 1;
-		}
-		50%,
 		100% {
-			opacity: 0;
+			transform: scale(1);
 		}
+		50% {
+			transform: scale(1.03);
+		}
+	}
+	.animate-breathe {
+		animation: breathe 3s ease-in-out infinite;
 	}
 </style>
-
