@@ -10,7 +10,8 @@
 
 	let hidden = $state(false);
 
-	const circumference = 2 * Math.PI * 120;
+	// Updated circumference for r=160 (2 * PI * 160)
+	const circumference = 2 * Math.PI * 160;
 	let dashOffset = $derived(circumference - (progress / 100) * circumference);
 
 	$effect(() => {
@@ -75,34 +76,34 @@
 	>
 		<!-- center stage -->
 		<div class="relative z-10 flex flex-1 flex-col items-center justify-center px-10">
-			<!-- logo with single ring -->
-			<div class="relative flex h-[300px] w-[300px] items-center justify-center">
+			<!-- logo with single ring (enlarged container: 400px) -->
+			<div class="relative flex h-[400px] w-[400px] items-center justify-center">
 				<!-- static ring -->
 				<div class="absolute inset-0 rounded-full border border-white/[0.06]"></div>
 
-				<!-- SVG progress ring -->
+				<!-- SVG progress ring (enlarged: 400x400) -->
 				<svg
 					class="absolute"
-					width="300"
-					height="300"
-					viewBox="0 0 300 300"
+					width="400"
+					height="400"
+					viewBox="0 0 400 400"
 					style="transform:rotate(-90deg)"
 				>
 					<circle
-						cx="150"
-						cy="150"
-						r="120"
+						cx="200"
+						cy="200"
+						r="160"
 						fill="none"
 						stroke="rgba(255,255,255,0.04)"
 						stroke-width="1"
 					/>
 					<circle
-						cx="150"
-						cy="150"
-						r="120"
+						cx="200"
+						cy="200"
+						r="160"
 						fill="none"
 						stroke="#ef4444"
-						stroke-width="2"
+						stroke-width="3"
 						stroke-dasharray={circumference}
 						stroke-dashoffset={dashOffset}
 						stroke-linecap="round"
@@ -110,9 +111,9 @@
 					/>
 				</svg>
 
-				<!-- the mark -->
+				<!-- the mark (enlarged logo) -->
 				<div bind:this={logoRef} class="animate-breathe">
-					<img src={fav} alt="logo" class="h-50 w-50" />
+					<img src={fav} alt="logo" class="h-64 w-64" />
 				</div>
 			</div>
 
@@ -123,7 +124,9 @@
 				</p>
 			</div>
 		</div>
+
 		<!-- bottom bar -->
+		<div bind:this={bottomRef}></div>
 	</div>
 {/if}
 
