@@ -182,7 +182,9 @@
 
 			<!-- Contact Form -->
 			<div class="contact-form-container order-2 md:order-2">
-				<div class="text-md md:text-md mb-6 font-stroke-display text-accent">Send a message.</div>
+				<h3 class="mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl">
+					Send a message.
+				</h3>
 
 				<form onsubmit={handleSubmit} class="flex flex-col gap-5">
 					<div>

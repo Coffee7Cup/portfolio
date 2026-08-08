@@ -102,14 +102,14 @@
 </script>
 
 <div
-	class="pointer-events-none z-[10000] transition-opacity duration-200"
+	class="pointer-events-none z-[10000] -translate-y-full transition-opacity duration-200"
 	class:fixed={isMdUp}
 	class:opacity-0={!isVisible}
 	class:opacity-100={isVisible}
 	style={isMdUp ? `left: ${mouseX}px; top: ${mouseY}px;` : ''}
 >
 	<div
-		class="flex min-h-10 max-w-xs -translate-x-full -translate-y-full items-center gap-2 rounded-lg border border-accent/40 bg-bg-main/50 px-3 py-1.5 text-sm font-medium text-text-main shadow-lg backdrop-blur-sm transition-all"
+		class="flex min-h-10 max-w-xs items-center gap-2 rounded-lg border border-accent/40 bg-bg-main/50 px-3 py-1.5 text-sm font-medium text-text-main shadow-lg backdrop-blur-sm transition-all"
 	>
 		<span class="leading-tight">{lastText}</span>
 		<img
