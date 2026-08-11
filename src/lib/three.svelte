@@ -13,7 +13,8 @@
 	let containerElement = $state();
 	let canvasWrapperElement = $state();
 
-	const DEG2RAD = Math.PI / 180;
+	const MOBILE_BREAKPOINT = 768; // px
+	const MOBILE_CAM_MULTIPLIER = 2; // push camera back 2x on mobile
 
 	onMount(() => {
 		const scene = new THREE.Scene();
@@ -41,58 +42,36 @@
 		let model;
 		const actions = [];
 		const animationProxy = { time: 0.5 };
+		let basePosition = null; // authored camera position from the GLB
+		let isMobile = null; // tracks which mode the camera is currently in
 
-		// The camera's fov/aspect as authored in the GLB (Blender's
-		// framing). We fit to this, we never overwrite it permanently.
-		let baseFov = null;
-		let baseAspect = null;
-
-		const fitCameraToAspect = (width, height) => {
-			if (!camera) return;
-			const aspect = width / height;
-			camera.aspect = aspect;
-
-			if (baseFov !== null && baseAspect !== null && aspect < baseAspect) {
-				// Narrower than authored (e.g. mobile portrait): widen the
-				// vertical FOV just enough to keep the original horizontal
-				// FOV, so left/right content stops getting cropped.
-				const baseVFovRad = baseFov * DEG2RAD;
-				const hFovRad = 1.3 * Math.atan(Math.tan(baseVFovRad / 2) * baseAspect);
-				const newVFovRad = 1.3 * Math.atan(Math.tan(hFovRad / 2) / aspect);
-				camera.fov = newVFovRad / DEG2RAD;
-			} else if (baseFov !== null) {
-				// As wide or wider than authored: use the original framing.
-				camera.fov = baseFov;
-			}
-			camera.updateProjectionMatrix();
-		};
-
-		const adjustModelScale = () => {
-			if (!model) return;
+		const applyCameraDistance = () => {
+			if (!camera || !basePosition) return;
 			const { width } = getSize();
-			const scale = Math.min(1, width / 900);
-			model.scale.set(scale, scale, scale);
+			const mobile = width <= MOBILE_BREAKPOINT;
+			if (mobile === isMobile) return; // no change, skip re-setting position
+			isMobile = mobile;
+			const multiplier = mobile ? MOBILE_CAM_MULTIPLIER : 1;
+			camera.position.copy(basePosition).multiplyScalar(multiplier);
 		};
-		//WARN: i guess i can store the parces glb file, but im not unmounting it anyways so i guess its fine
+
 		const loader = new GLTFLoader();
 		loader.load(`${base}/prop.glb`, (gltf) => {
 			model = gltf.scene;
-			adjustModelScale();
 			scene.add(model);
 
 			const { width, height } = getSize();
 			if (gltf.cameras && gltf.cameras.length > 0) {
 				camera = gltf.cameras[0];
-				baseFov = camera.fov;
-				baseAspect = camera.aspect || width / height;
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
 			} else {
 				camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
 				camera.position.set(0, 5, 10);
 				camera.lookAt(0, 0, 0);
-				baseFov = camera.fov;
-				baseAspect = width / height;
 			}
-			fitCameraToAspect(width, height);
+			basePosition = camera.position.clone();
+			applyCameraDistance();
 
 			if (gltf.animations && gltf.animations.length > 0) {
 				mixer = new THREE.AnimationMixer(model);
@@ -149,11 +128,13 @@
 		}
 
 		const handleResize = () => {
-			if (!camera) return;
 			const { width, height } = getSize();
 			renderer.setSize(width, height);
-			fitCameraToAspect(width, height);
-			adjustModelScale();
+			if (camera) {
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
+			}
+			applyCameraDistance();
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -170,7 +151,7 @@
 </script>
 
 <div bind:this={containerElement} id="3d" class="scroll-container relative h-[300vh] w-0">
-	<div bind:this={canvasWrapperElement} class="canvas-wrapper pointer-events-none fixed inset-0">
+	<div bind:this={canvasWrapperElement} class="canvas-wrapper fixed inset-0">
 		<canvas bind:this={canvasElement} class="block h-full w-full"></canvas>
 	</div>
 </div>
