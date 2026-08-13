@@ -81,7 +81,6 @@
 	let isDark = $state(false);
 
 	// WARN: im assuming that the browser will cache this files, so when i fetch them again in Projects.svelte they are in cache.
-	// TODO: see if imgs are cached or not
 	async function startLoading() {
 		try {
 			// 1. Load GLB

@@ -3,6 +3,7 @@
 	import { gsap } from 'gsap';
 	import Wayland from '$lib/assets/wayland.svg';
 	import Iced from '$lib/assets/iced.svg';
+	import Fiber from '$lib/assets/go-fiber-dark.svg';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { browser } from '$app/environment';
 	import {
@@ -130,6 +131,12 @@
 					icon: _React,
 					name: 'React',
 					why_this: 'Building dynamic, modular web views and reusable UI component architectures.'
+				},
+				{
+					icon: Fiber,
+					isImage: true,
+					name: 'Go Fiber',
+					why_this: 'An Express-inspired web framework written in Go.'
 				},
 				{
 					icon: ComposeMultiplatform,
