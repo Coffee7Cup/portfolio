@@ -2,17 +2,16 @@
 	import { getContext } from 'svelte';
 	import { gsap } from 'gsap';
 	import GrainyText from '$lib/components/GrainyText.svelte';
-	import { base } from '$app/paths';
+	import { base,resolve } from '$app/paths';
 
 	let portfolioData = getContext('portfolio');
 	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
-	let experience = portfolioData.experience.map((c) =>
-		c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
-	);
+	let experience = portfolioData.experience
 
 	let currentIndex = $state(0);
 	let sliderTrack = $state();
+	let loadedCerts = $state({});
 
 	function moveSlider(direction) {
 		if (direction === 'next') {
@@ -55,10 +54,20 @@
 			<div bind:this={sliderTrack} class="flex h-full w-full">
 				{#each experience as cert, i (i)}
 					<div class="relative flex h-full w-full shrink-0 items-center justify-center p-4">
+						{#if !loadedCerts[i]}
+							<div class="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-xs z-10 rounded-lg">
+								<div class="flex flex-col items-center gap-3">
+									<div class="h-8 w-8 animate-spin rounded-full border-3 border-accent/20 border-t-accent"></div>
+									<span class="text-[10px] font-semibold tracking-wider text-accent uppercase animate-pulse">Loading...</span>
+								</div>
+							</div>
+						{/if}
 						<img
-							src={cert}
+							src={resolve(cert)}
 							alt="certificate"
 							class="h-full w-full rounded-lg object-contain transition-transform duration-300 hover:scale-[1.02]"
+							onload={() => loadedCerts[i] = true}
+							loading="lazy"
 						/>
 					</div>
 				{/each}

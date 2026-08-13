@@ -3,39 +3,117 @@
 	import GrainyText from '$lib/components/GrainyText.svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { base } from '$app/paths';
+	import { base, resolve } from '$app/paths';
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	let { text = $bindable(''), pointTo = $bindable('default') } = $props();
 
 	const portfolio = getContext('portfolio');
-	const projects = portfolio.projects.map((p) => ({
-		...p,
-		img:
-			p.img.startsWith('http') || p.img.startsWith(base)
-				? p.img
-				: `${base}/${p.img.replace(/^\//, '')}`
-	}));
+	const projects = portfolio.projects;
 
-	// Configuration for pure row animation
-	const ROWS = 8;
-	const COLS = 1;
-	const cells = Array.from({ length: ROWS * COLS });
+	const MAX_PIXEL = 38; // block size at peak pixelation
 
 	let sectionEl = $state(null);
 	let titleEl = $state(null);
 	let descEl = $state(null);
-	let imgEl = $state(null);
-	let panelEls = $state([]);
-	let currentIndex = $state({
-		ind: 0
-	});
+	let canvasEl = $state(null);
+	let currentIndex = $state({ ind: 0 });
+
+	let ctx, offCanvas, offCtx;
+	let loadedImgs = {};
+	let loadingStates = $state({});
+	let lastDrawnIndex = 0;
+	const proxy = { pixel: 1 };
+
+	function loadImage(src) {
+		return new Promise((res) => {
+			const img = new Image();
+			img.onload = () => res(img);
+			img.src = resolve(src);
+		});
+	}
+
+	function fitCanvas() {
+		const rect = canvasEl.getBoundingClientRect();
+		const dpr = Math.min(window.devicePixelRatio || 1, 2);
+		canvasEl.width = rect.width * dpr;
+		canvasEl.height = rect.height * dpr;
+		offCanvas.width = canvasEl.width;
+		offCanvas.height = canvasEl.height;
+	}
+
+	// draws the given image "cover"-fit into a w x h canvas, pixelated by pixelSize
+	function draw(img, pixelSize) {
+		if (!img) return;
+		const w = canvasEl.width;
+		const h = canvasEl.height;
+		const size = Math.max(1, pixelSize);
+		const scaledW = Math.max(1, Math.round(w / size));
+		const scaledH = Math.max(1, Math.round(h / size));
+
+		// cover-fit math so the source image fills the frame without distortion
+		const imgRatio = img.naturalWidth / img.naturalHeight;
+		const frameRatio = w / h;
+		let sx, sy, sw, sh;
+		if (imgRatio > frameRatio) {
+			sh = img.naturalHeight;
+			sw = sh * frameRatio;
+			sx = (img.naturalWidth - sw) / 2;
+			sy = 0;
+		} else {
+			sw = img.naturalWidth;
+			sh = sw / frameRatio;
+			sx = 0;
+			sy = (img.naturalHeight - sh) / 2;
+		}
+
+		offCtx.clearRect(0, 0, w, h);
+		offCtx.imageSmoothingEnabled = size > 2 ? false : true;
+		offCtx.drawImage(img, sx, sy, sw, sh, 0, 0, scaledW, scaledH);
+
+		ctx.imageSmoothingEnabled = false;
+		ctx.clearRect(0, 0, w, h);
+		ctx.drawImage(offCanvas, 0, 0, scaledW, scaledH, 0, 0, w, h);
+	}
+
+	function drawIndex(index, pixelSize) {
+		lastDrawnIndex = index;
+		const img = loadedImgs[index];
+		if (img) {
+			draw(img, pixelSize);
+		} else {
+			if (ctx) {
+				ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+			}
+			if (!loadingStates[index] && !loadedImgs[index]) {
+				loadingStates[index] = true;
+				loadImage(projects[index].img).then((loadedImg) => {
+					loadedImgs[index] = loadedImg;
+					loadingStates[index] = false;
+					if (lastDrawnIndex === index) {
+						draw(loadedImg, proxy.pixel);
+					}
+				});
+			}
+		}
+	}
 
 	onMount(() => {
-		// scaleY controls the height of each row block
-		gsap.set(panelEls, { scaleY: 0 });
-		gsap.set(imgEl, { scale: 1.08, opacity: 1 });
+		let cancelled = false;
+
+		ctx = canvasEl.getContext('2d');
+		offCanvas = document.createElement('canvas');
+		offCtx = offCanvas.getContext('2d');
+		fitCanvas();
+		drawIndex(0, 1);
+
+		const resizeHandler = () => {
+			fitCanvas();
+			const img = loadedImgs[lastDrawnIndex];
+			if (img) draw(img, proxy.pixel);
+		};
+		window.addEventListener('resize', resizeHandler);
 
 		const tl = gsap.timeline({
 			scrollTrigger: {
@@ -44,50 +122,52 @@
 				end: () => `+=${(projects.length - 1) * window.innerHeight}`,
 				scrub: 1,
 				pin: true,
-				anticipatePin: 1
+				anticipatePin: 1,
+				onUpdate: (self) => {
+					// text index is derived straight from scroll progress —
+					// works identically scrolling up or down, no swap-flag needed
+					const i = Math.round(self.progress * (projects.length - 1));
+					if (i !== currentIndex.ind) currentIndex.ind = i;
+				}
 			}
 		});
 
 		projects.forEach((_, i) => {
 			if (i === projects.length - 1) return;
 
-			tl.to([titleEl, descEl], { opacity: 0, y: -12, duration: 0.2 })
-				.to(imgEl, { scale: 1.08, opacity: 0.3, duration: 0.4 }, '<')
-				// Cover Image (Bottom to Top)
-				.to(
-					panelEls,
-					{
-						scaleY: 1,
-						transformOrigin: 'bottom',
-						duration: 0.5,
-						ease: 'power3.inOut',
-						stagger: { each: 0.04, from: 'end' }
-					},
-					'<'
-				)
-				.set(currentIndex, {
-					ind: i + 1
+			tl
+				// pixelate up — ALWAYS drawing the current image, never a mutable "active" ref
+				.to(proxy, {
+					pixel: MAX_PIXEL,
+					duration: 0.3,
+					ease: 'power1.in',
+					onUpdate: () => {
+						if (cancelled) return;
+						drawIndex(i, proxy.pixel);
+					}
 				})
-				.set(imgEl, { attr: { src: projects[i + 1].img } })
-				.set(panelEls, { transformOrigin: 'top' })
-				.to(imgEl, { opacity: 1, duration: 0.3 })
-				.to(
-					panelEls,
-					{
-						scaleY: 0,
-						duration: 0.6,
-						ease: 'power4.inOut',
-						stagger: { each: 0.04, from: 'start' }
-					},
-					'<'
-				)
-				.to(imgEl, { scale: 1, duration: 0.8, ease: 'power3.out' }, '<')
-				.to([titleEl, descEl], { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, '-=0.35');
+				// pixelate back down — ALWAYS the next image
+				// GSAP reverses this tween cleanly when scrubbing back up, so no
+				// separate "swap back" logic is needed
+				.to(proxy, {
+					pixel: 1,
+					duration: 0.3,
+					ease: 'power2.out',
+					onUpdate: () => {
+						if (cancelled) return;
+						drawIndex(i + 1, proxy.pixel);
+					}
+				});
 		});
 
 		return () => {
-			tl.scrollTrigger?.kill();
-			tl.kill();
+			cancelled = true;
+			window.removeEventListener('resize', resizeHandler);
+			ScrollTrigger.getAll().forEach((st) => {
+				if (st.vars.trigger === sectionEl) {
+					st.kill();
+				}
+			});
 		};
 	});
 </script>
@@ -105,7 +185,6 @@
 		pointTo = 'default';
 	}}
 >
-	<!-- Rotated PROJECTS title -->
 	<div
 		class="pointer-events-none z-30 flex w-full shrink-0 items-center justify-center pt-1 md:absolute md:left-0 md:h-full md:w-20 md:translate-x-10 md:px-4 md:pt-0"
 	>
@@ -118,35 +197,26 @@
 		</div>
 	</div>
 
-	<!-- Content -->
 	<div
 		class="z-10 flex min-h-screen w-full flex-1 flex-col items-center justify-start p-2 pt-1 pb-20 md:absolute md:right-0 md:h-screen md:w-screen md:justify-center md:px-0 md:py-0"
 	>
 		<div
 			class="flex h-auto w-full flex-col items-center gap-4 md:h-[65vh] md:flex-row md:items-stretch md:gap-0 md:pr-10 md:pl-32 lg:pr-5 lg:pl-40"
 		>
-			<!-- image frame -->
 			<div
 				class="relative aspect-video w-full shrink-0 overflow-hidden rounded-md bg-neutral-950 md:w-4/6"
 			>
-				<img
-					bind:this={imgEl}
-					src={projects[0].img}
-					alt={projects[0].title}
-					class="absolute inset-0 h-full w-full object-cover"
-				/>
-				<!-- reveal panels -->
-				<div
-					class="pointer-events-none absolute inset-0 grid"
-					style="grid-template-rows: repeat({ROWS}, 1fr); grid-template-columns: 1fr;"
-				>
-					{#each cells as _, i (i)}
-						<div bind:this={panelEls[i]} class="w-full origin-bottom bg-bg-main"></div>
-					{/each}
-				</div>
+				<canvas bind:this={canvasEl} class="absolute inset-0 h-full w-full"></canvas>
+				{#if loadingStates[currentIndex.ind]}
+					<div class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-xs transition-opacity duration-300">
+						<div class="flex flex-col items-center gap-3">
+							<div class="h-10 w-10 animate-spin rounded-full border-4 border-accent/20 border-t-accent"></div>
+							<span class="text-xs font-semibold tracking-wider text-accent uppercase animate-pulse">Loading Project...</span>
+						</div>
+					</div>
+				{/if}
 			</div>
 
-			<!-- description -->
 			<div
 				class="z-20 flex w-full flex-col items-start justify-center rounded-md bg-bg-main/40 p-5 backdrop-blur-sm md:w-1/3 md:p-10 md:pt-20"
 			>

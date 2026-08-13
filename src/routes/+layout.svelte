@@ -43,72 +43,27 @@
 			chunks.push(value);
 			receivedLength += value.length;
 
-			const glbProgress = Math.min(Math.round((receivedLength / contentLength) * 70), 70);
+			const glbProgress = Math.min(Math.round((receivedLength / contentLength) * 90), 90);
 			loadProgress = glbProgress;
 			loadStatus = `Downloading 3D assets... ${Math.round((receivedLength / contentLength) * 100)}%`;
 		}
 	}
 
-	async function preloadImages(imageUrls) {
-		loadStatus = 'Loading images...';
-		let loadedCount = 0;
-		const totalImages = imageUrls.length;
-
-		if (totalImages === 0) {
-			loadProgress = 90;
-			return;
-		}
-
-		const promises = imageUrls.map((url) => {
-			return new Promise((resolve) => {
-				const img = new Image();
-				img.src = url;
-				img.onload = () => {
-					loadedCount++;
-					loadProgress = 70 + Math.round((loadedCount / totalImages) * 20);
-					resolve();
-				};
-				img.onerror = () => {
-					loadedCount++;
-					resolve();
-				};
-			});
-		});
-
-		await Promise.all(promises);
-	}
-
 	let isDark = $state(false);
 
-	// WARN: im assuming that the browser will cache this files, so when i fetch them again in Projects.svelte they are in cache.
 	async function startLoading() {
 		try {
 			// 1. Load GLB
 			await preloadGLB(`${base}/prop.glb`);
 
-			// 2. Load images
-			let imageUrls = portfolioData.projects.map((p) =>
-				p.img.startsWith('http') || p.img.startsWith(base)
-					? p.img
-					: `${base}/${p.img.replace(/^\//, '')}`
-			);
-
-			let certUrls = portfolioData.experience.map((c) =>
-				c.startsWith('http') || c.startsWith(base) ? c : `${base}/${c.replace(/^\//, '')}`
-			);
-
-			imageUrls = [...imageUrls, ...certUrls];
-
-			await preloadImages(imageUrls);
-
-			// 3. Wait for fonts
+			// 2. Wait for fonts
 			loadStatus = 'Loading fonts & styles...';
 			loadProgress = 95;
 			if (typeof document !== 'undefined' && document.fonts) {
 				await document.fonts.ready;
 			}
 
-			// 4. Complete
+			// 3. Complete
 			loadProgress = 100;
 			loadStatus = 'Ready!';
 
