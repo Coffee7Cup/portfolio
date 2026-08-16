@@ -220,9 +220,9 @@
 			<div
 				class="z-20 flex w-full flex-col items-start justify-center rounded-md bg-bg-main/40 p-5 backdrop-blur-sm md:w-1/3 md:p-10 md:pt-20"
 			>
-				<h3 bind:this={titleEl} class="mb-2 text-lg font-bold md:text-2xl">
+				<h2 bind:this={titleEl} class="mb-2 text-lg font-bold md:text-2xl">
 					{projects[currentIndex.ind].title}
-				</h3>
+				</h2>
 				<p
 					bind:this={descEl}
 					class="max-h-35 overflow-y-auto text-sm leading-relaxed opacity-80 sm:max-h-none"

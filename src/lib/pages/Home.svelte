@@ -33,8 +33,10 @@
 <div class="overflow-hidden p-4">
 	<div class="pointer-events-none absolute inset-0 z-10 p-3">
 		<div class="flex h-screen w-screen flex-col items-center justify-center leading-none">
-			<div class="scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] md:text-[7rem]">Hey,</div>
+			<h1 class="sr-only">Yashwanth — Systems & Fullstack Engineer Portfolio</h1>
+			<div aria-hidden="true" class="scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] md:text-[7rem]">Hey,</div>
 			<div
+				aria-hidden="true"
 				class="scale-x-130 scale-y-70 font-stroke-clean text-[1.8rem] sm:text-6xl md:text-[7rem]"
 			>
 				I'm {personal.name}
@@ -69,7 +71,7 @@
 	</div>
 </div>
 
-<svg class="absolute h-0 w-0" aria-hidden="true">
+<svg class="absolute h-0 w-0" aria-hidden="true" role="none">
 	<filter id="grn">
 		<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" result="noise" />
 

@@ -98,6 +98,24 @@
 		}
 
 		startLoading();
+
+		// Dampen scroll sensitivity — more physical scroll = less page movement
+		const SCROLL_MULTIPLIER = 0.3;
+		const handleWheel = (e) => {
+			// Don't interfere with horizontal scroll or pinch-zoom
+			if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+			e.preventDefault();
+			window.scrollBy({
+				top: e.deltaY * SCROLL_MULTIPLIER,
+				left: 0,
+				behavior: 'instant'
+			});
+		};
+		window.addEventListener('wheel', handleWheel, { passive: false });
+
+		return () => {
+			window.removeEventListener('wheel', handleWheel);
+		};
 	});
 	let expanded = $state(false);
 	function handleExpand() {
@@ -160,8 +178,81 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<!-- Primary Meta Tags -->
 	<title>Yashwanth | Portfolio</title>
+	<meta name="title" content="Yashwanth | Systems & Fullstack Engineer — Portfolio" />
+	<meta
+		name="description"
+		content="Portfolio of Yashwanth — a systems and fullstack engineer building high-performance infrastructure with Rust, Go, Svelte, and Kotlin. Explore projects, skills, and experience."
+	/>
+	<meta
+		name="keywords"
+		content="Yashwanth, portfolio, systems engineer, fullstack developer, Rust developer, Go developer, Svelte, Kotlin, Android, Linux, Wayland, web developer, software engineer"
+	/>
+	<meta name="author" content="Yashwanth" />
+	<meta name="robots" content="index, follow" />
+	<link rel="canonical" href="https://coffee7cup.github.io/portfolio/" />
+	<link rel="icon" href={favicon} />
+	<link rel="icon" type="image/svg+xml" href="https://coffee7cup.github.io/portfolio/favicon.svg" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://coffee7cup.github.io/portfolio/" />
+	<meta property="og:title" content="Yashwanth | Systems & Fullstack Engineer — Portfolio" />
+	<meta
+		property="og:description"
+		content="Portfolio of Yashwanth — a systems and fullstack engineer building high-performance infrastructure with Rust, Go, Svelte, and Kotlin. Explore projects, skills, and experience."
+	/>
+	<meta
+		property="og:image"
+		content="https://coffee7cup.github.io/portfolio/favicon.svg"
+	/>
+	<meta property="og:image:alt" content="Yashwanth's Portfolio Logo" />
+	<meta property="og:site_name" content="Yashwanth's Portfolio" />
+	<meta property="og:locale" content="en_US" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:url" content="https://coffee7cup.github.io/portfolio/" />
+	<meta name="twitter:title" content="Yashwanth | Systems & Fullstack Engineer — Portfolio" />
+	<meta
+		name="twitter:description"
+		content="Portfolio of Yashwanth — a systems and fullstack engineer building high-performance infrastructure with Rust, Go, Svelte, and Kotlin."
+	/>
+	<meta
+		name="twitter:image"
+		content="https://coffee7cup.github.io/portfolio/favicon.svg"
+	/>
+	<meta name="twitter:image:alt" content="Yashwanth's Portfolio Logo" />
+
+	<!-- JSON-LD Structured Data -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'Person',
+		name: 'Yashwanth',
+		url: 'https://coffee7cup.github.io/portfolio/',
+		image: 'https://coffee7cup.github.io/portfolio/favicon.svg',
+		jobTitle: 'Systems & Fullstack Engineer',
+		description: portfolioData.personal.bio,
+		email: `mailto:${portfolioData.personal.email}`,
+		sameAs: [
+			portfolioData.personal.github,
+			portfolioData.personal.linkedin
+		],
+		knowsAbout: [
+			'Rust', 'Go', 'Svelte', 'SvelteKit', 'Kotlin', 'Jetpack Compose',
+			'Linux', 'Wayland', 'Systems Programming', 'Fullstack Development',
+			'PostgreSQL', 'Three.js', 'WebSockets'
+		]
+	})}</script>`}
+
+	<!-- WebSite schema for sitelinks search box -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: "Yashwanth's Portfolio",
+		url: 'https://coffee7cup.github.io/portfolio/'
+	})}</script>`}
 </svelte:head>
 
 <!-- Premium Loader Screen Overlay -->

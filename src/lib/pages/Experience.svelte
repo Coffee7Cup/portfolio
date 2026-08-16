@@ -64,7 +64,7 @@
 						{/if}
 						<img
 							src={resolve(cert)}
-							alt="certificate"
+							alt="Certificate {i + 1} of {experience.length} — Yashwanth's professional certification"
 							class="h-full w-full rounded-lg object-contain transition-transform duration-300 hover:scale-[1.02]"
 							onload={() => loadedCerts[i] = true}
 							loading="lazy"

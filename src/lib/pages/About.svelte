@@ -83,11 +83,11 @@
 				>
 					{bio}
 				</p>
-				<h3
+				<h2
 					class="about-subheading mt-8 mb-6 font-stroke-display text-xl font-extrabold text-accent md:mt-10 md:text-2xl lg:text-3xl"
 				>
 					What I'm Good at.
-				</h3>
+				</h2>
 				<div class="flex flex-wrap gap-2 md:gap-3">
 					{#each skills as skill (skill)}
 						<div class="about-pill">

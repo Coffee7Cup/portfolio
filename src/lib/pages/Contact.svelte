@@ -98,9 +98,9 @@
 			<!-- Contact Info & Socials -->
 			<div class="contact-info-container order-1 flex flex-col justify-between md:order-1">
 				<div>
-					<h3 class="mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl">
+					<h2 class="mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl">
 						Let's connect.
-					</h3>
+					</h2>
 					<p class="mb-8 font-main text-sm leading-relaxed text-text-sub md:text-base">
 						Whether you want to discuss a low-level systems project, talk about a backend
 						infrastructure, or just talk tech, feel free to reach out. I'm always open to discussing
@@ -182,9 +182,9 @@
 
 			<!-- Contact Form -->
 			<div class="contact-form-container order-2 md:order-2">
-				<h3 class="mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl">
+				<h2 class="mb-6 font-stroke-display text-xl font-extrabold text-accent md:text-2xl">
 					Send a message.
-				</h3>
+				</h2>
 
 				<form onsubmit={handleSubmit} class="flex flex-col gap-5">
 					<div>

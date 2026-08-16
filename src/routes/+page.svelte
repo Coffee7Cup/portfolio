@@ -13,11 +13,12 @@
 	let compPointTo = $state('normal');
 </script>
 
-<div class="relative m-0 w-full overflow-x-hidden bg-bg-main p-0">
+<main class="relative m-0 w-full overflow-x-hidden bg-bg-main p-0" role="main" aria-label="Yashwanth's Portfolio">
 	<div
 		bind:this={threeDimContainer}
 		id="3d-container"
 		class="pointer-events-none absolute inset-0 z-20 max-w-screen overflow-hidden bg-transparent"
+		aria-hidden="true"
 	>
 		<Tee bind:compText bind:compPointTo />
 	</div>
@@ -37,4 +38,4 @@
 	<Contact bind:text={compText} bind:pointTo={compPointTo} />
 
 	<Companion bind:text={compText} bind:pointTo={compPointTo} />
-</div>
+</main>

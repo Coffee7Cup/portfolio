@@ -1,3 +1,5 @@
-# allow crawling everything by default
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://coffee7cup.github.io/portfolio/sitemap.xml
