@@ -11,7 +11,10 @@
 	let { children } = $props();
 	let activeSection = $state('home');
 
+	// Shared store for preloaded Image objects, keyed by source path
+	const preloadedImages = {};
 	setContext('portfolio', portfolioData);
+	setContext('preloadedImages', preloadedImages);
 
 	const navItems = [
 		{ id: 'home', label: 'Home' },
@@ -56,14 +59,17 @@
 			// 1. Load GLB
 			await preloadGLB(`${base}/prop.glb`);
 
-			// 2. Wait for fonts
+			// 2. Kick off image preload in the background (non-blocking)
+			preloadProCert();
+
+			// 3. Wait for fonts
 			loadStatus = 'Loading fonts & styles...';
 			loadProgress = 95;
 			if (typeof document !== 'undefined' && document.fonts) {
 				await document.fonts.ready;
 			}
 
-			// 3. Complete
+			// 4. Complete
 			loadProgress = 100;
 			loadStatus = 'Ready!';
 
@@ -90,16 +96,31 @@
 		}
 	}
 
+	function loadImage(src) {
+		return new Promise((resolvePromise, reject) => {
+			const img = new Image();
+			img.onload = () => resolvePromise(img);
+			img.onerror = reject;
+			img.src = resolve(src);
+		});
+	}
 	async function preloadProCert() {
-		let projImg = portfolioData.projects.map((item) => item.img);
-		let certImg = portfolioData.experience;
+		// Extract all image sources into a single array
+		const projImgs = portfolioData.projects.map((item) => item.img);
+		// experience entries are plain strings, not objects
+		const certImgs = portfolioData.experience
+		const allImages = [...projImgs, ...certImgs];
 
-		for (let img of projImg) {
-			fetch(resolve(img));
-		}
-
-		for (let img of certImg) {
-			fetch(resolve(img));
+		// Preload all images simultaneously in parallel and store in shared map
+		try {
+			const results = await Promise.allSettled(allImages.map((src) => loadImage(src)));
+			results.forEach((result, i) => {
+				if (result.status === 'fulfilled') {
+					preloadedImages[allImages[i]] = result.value;
+				}
+			});
+		} catch (err) {
+			console.error('Failed to preload images:', err);
 		}
 	}
 
@@ -184,8 +205,7 @@
 			if (el) observer.observe(el);
 		});
 
-		//preload projects and certificates
-		preloadProCert();
+		// Images are now preloaded during initial loading screen
 
 		return () => {
 			observer.disconnect();

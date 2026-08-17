@@ -11,6 +11,7 @@
 
 	const portfolio = getContext('portfolio');
 	const projects = portfolio.projects;
+	const preloadedImages = getContext('preloadedImages') || {};
 
 	const MAX_PIXEL = 38; // block size at peak pixelation
 
@@ -26,7 +27,20 @@
 	let lastDrawnIndex = 0;
 	const proxy = { pixel: 1 };
 
+	// Seed loadedImgs from preloaded context (images fetched during loading screen)
+	function seedFromPreloaded() {
+		projects.forEach((proj, i) => {
+			if (!loadedImgs[i] && preloadedImages[proj.img]) {
+				loadedImgs[i] = preloadedImages[proj.img];
+			}
+		});
+	}
+
 	function loadImage(src) {
+		// Check preloaded cache first
+		if (preloadedImages[src]) {
+			return Promise.resolve(preloadedImages[src]);
+		}
 		return new Promise((res) => {
 			const img = new Image();
 			img.onload = () => res(img);
@@ -106,6 +120,7 @@
 		offCanvas = document.createElement('canvas');
 		offCtx = offCanvas.getContext('2d');
 		fitCanvas();
+		seedFromPreloaded();
 		drawIndex(0, 1);
 
 		const resizeHandler = () => {
