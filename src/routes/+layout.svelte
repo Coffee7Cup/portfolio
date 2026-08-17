@@ -90,6 +90,19 @@
 		}
 	}
 
+	async function preloadProCert() {
+		let projImg = portfolioData.projects.map((item) => item.img);
+		let certImg = portfolioData.experience;
+
+		for (let img of projImg) {
+			fetch(resolve(img));
+		}
+
+		for (let img of certImg) {
+			fetch(resolve(img));
+		}
+	}
+
 	onMount(() => {
 		// Toggle dark class on load if preferred
 		if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -171,6 +184,9 @@
 			if (el) observer.observe(el);
 		});
 
+		//preload projects and certificates
+		preloadProCert();
+
 		return () => {
 			observer.disconnect();
 		};
@@ -203,10 +219,7 @@
 		property="og:description"
 		content="Portfolio of Yashwanth — a systems and fullstack engineer building high-performance infrastructure with Rust, Go, Svelte, and Kotlin. Explore projects, skills, and experience."
 	/>
-	<meta
-		property="og:image"
-		content="https://coffee7cup.github.io/portfolio/favicon.svg"
-	/>
+	<meta property="og:image" content="https://coffee7cup.github.io/portfolio/og.png" />
 	<meta property="og:image:alt" content="Yashwanth's Portfolio Logo" />
 	<meta property="og:site_name" content="Yashwanth's Portfolio" />
 	<meta property="og:locale" content="en_US" />
@@ -219,30 +232,34 @@
 		name="twitter:description"
 		content="Portfolio of Yashwanth — a systems and fullstack engineer building high-performance infrastructure with Rust, Go, Svelte, and Kotlin."
 	/>
-	<meta
-		name="twitter:image"
-		content="https://coffee7cup.github.io/portfolio/favicon.svg"
-	/>
+	<meta name="twitter:image" content="https://coffee7cup.github.io/portfolio/og.png" />
 	<meta name="twitter:image:alt" content="Yashwanth's Portfolio Logo" />
 
 	<!-- JSON-LD Structured Data -->
-	{@html `<script type="application/ld+json">${JSON.stringify({
+	{@html `<script type="application/ld+json"> ${JSON.stringify({
 		'@context': 'https://schema.org',
 		'@type': 'Person',
 		name: 'Yashwanth',
 		url: 'https://coffee7cup.github.io/portfolio/',
-		image: 'https://coffee7cup.github.io/portfolio/favicon.svg',
+		image: 'https://coffee7cup.github.io/portfolio/og.png',
 		jobTitle: 'Systems & Fullstack Engineer',
 		description: portfolioData.personal.bio,
 		email: `mailto:${portfolioData.personal.email}`,
-		sameAs: [
-			portfolioData.personal.github,
-			portfolioData.personal.linkedin
-		],
+		sameAs: [portfolioData.personal.github, portfolioData.personal.linkedin],
 		knowsAbout: [
-			'Rust', 'Go', 'Svelte', 'SvelteKit', 'Kotlin', 'Jetpack Compose',
-			'Linux', 'Wayland', 'Systems Programming', 'Fullstack Development',
-			'PostgreSQL', 'Three.js', 'WebSockets'
+			'Rust',
+			'Go',
+			'Svelte',
+			'SvelteKit',
+			'Kotlin',
+			'Jetpack Compose',
+			'Linux',
+			'Wayland',
+			'Systems Programming',
+			'Fullstack Development',
+			'PostgreSQL',
+			'Three.js',
+			'WebSockets'
 		]
 	})}</script>`}
 
